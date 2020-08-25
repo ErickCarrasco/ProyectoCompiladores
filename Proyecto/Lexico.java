@@ -60,11 +60,11 @@ class Lexico {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\2\1\2\0\1\1\22\0\1\1\14\0\1\2"+
-    "\2\0\12\3\1\0\1\4\2\0\1\5\2\0\32\6"+
-    "\6\0\1\7\3\6\1\10\1\11\2\6\1\12\1\6"+
-    "\1\13\1\14\1\6\1\15\3\6\1\16\1\17\1\20"+
-    "\1\21\5\6\u0185\0";
+    "\11\0\2\1\2\0\1\1\22\0\1\1\7\0\1\2"+
+    "\1\3\3\0\1\4\2\0\12\5\1\0\1\6\1\7"+
+    "\1\10\1\11\2\0\32\12\6\0\1\13\3\12\1\14"+
+    "\1\15\2\12\1\16\1\12\1\17\1\20\1\12\1\21"+
+    "\3\12\1\22\1\23\1\24\1\25\5\12\u0185\0";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[512];
@@ -91,10 +91,11 @@ class Lexico {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\3\1\24\0\1\2\7\0\1\3";
+    "\1\0\3\1\30\0\1\2\2\0\1\2\11\0\1\3"+
+    "\7\0\1\4";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[33];
+    int [] result = new int[50];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -119,14 +120,16 @@ class Lexico {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\22\0\44\0\66\0\110\0\132\0\154\0\176"+
-    "\0\220\0\242\0\264\0\306\0\330\0\352\0\374\0\u010e"+
-    "\0\u0120\0\u0132\0\u0144\0\u0156\0\u0168\0\u017a\0\u018c\0\u019e"+
-    "\0\22\0\u01b0\0\u01c2\0\u01d4\0\u01e6\0\u01f8\0\u020a\0\u021c"+
-    "\0\22";
+    "\0\0\0\26\0\54\0\102\0\130\0\156\0\204\0\232"+
+    "\0\260\0\306\0\334\0\362\0\u0108\0\u011e\0\u0134\0\u014a"+
+    "\0\u0160\0\u0176\0\u018c\0\u01a2\0\u01b8\0\u01ce\0\u01e4\0\u01fa"+
+    "\0\u0210\0\u0226\0\u023c\0\u0252\0\u0134\0\u0268\0\u027e\0\26"+
+    "\0\u0294\0\u02aa\0\u02c0\0\u02d6\0\u02ec\0\u0302\0\u0318\0\u032e"+
+    "\0\u0344\0\26\0\u035a\0\u0370\0\u0386\0\u039c\0\u03b2\0\u03c8"+
+    "\0\u03de\0\26";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[33];
+    int [] result = new int[50];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -149,21 +152,31 @@ class Lexico {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\11\2\1\3\1\4\7\2\31\0\1\5\27\0\1\6"+
-    "\17\0\1\7\26\0\1\10\11\0\1\11\12\0\1\12"+
-    "\36\0\1\13\4\0\1\12\4\0\14\14\1\0\1\15"+
-    "\21\0\1\16\1\0\1\17\2\0\14\14\1\0\1\15"+
-    "\4\0\14\20\1\0\1\16\1\21\20\0\1\16\1\0"+
-    "\1\17\17\0\1\22\1\0\1\23\2\0\14\20\5\0"+
-    "\1\24\15\0\1\22\1\25\20\0\1\22\1\0\1\23"+
-    "\17\0\1\24\1\0\1\26\23\0\1\27\15\0\1\30"+
-    "\1\0\1\26\1\31\16\0\1\27\7\0\1\32\6\0"+
-    "\1\33\2\0\1\30\2\0\1\31\24\0\1\34\30\0"+
-    "\1\35\17\0\1\36\26\0\1\37\17\0\1\37\12\0"+
-    "\1\40\12\0\1\40\2\0\1\41\15\0";
+    "\15\2\1\3\1\4\7\2\41\0\1\5\27\0\1\6"+
+    "\3\0\1\7\23\0\1\10\10\0\1\11\47\0\1\12"+
+    "\15\0\1\13\12\0\1\11\10\0\14\14\1\0\1\15"+
+    "\46\0\1\16\3\0\5\17\1\20\1\17\1\21\1\22"+
+    "\1\21\14\14\1\0\1\15\10\0\14\23\1\0\1\24"+
+    "\24\0\10\17\1\25\22\17\1\20\1\17\1\21\1\22"+
+    "\1\21\24\17\1\25\1\17\14\26\10\0\1\27\1\0"+
+    "\14\30\1\0\1\31\3\0\1\32\4\0\14\23\1\0"+
+    "\1\24\10\0\14\33\12\0\14\30\1\17\1\34\1\17"+
+    "\1\35\1\17\1\36\2\17\1\25\1\17\14\26\10\0"+
+    "\1\25\16\0\1\37\1\0\1\40\1\0\1\41\4\0"+
+    "\14\30\1\0\1\31\2\0\1\42\22\0\1\31\3\0"+
+    "\1\32\21\0\1\43\3\0\1\44\4\0\14\33\1\17"+
+    "\1\34\1\17\1\35\4\17\1\25\16\17\1\34\1\17"+
+    "\1\35\1\17\1\36\2\17\1\25\15\17\1\0\1\37"+
+    "\1\0\1\40\23\0\1\37\1\0\1\40\1\0\1\41"+
+    "\31\0\1\45\15\0\1\43\2\0\1\46\22\0\1\43"+
+    "\3\0\1\44\21\0\1\45\3\0\1\47\31\0\1\50"+
+    "\15\0\1\51\3\0\1\47\1\52\20\0\1\50\13\0"+
+    "\1\53\6\0\1\54\2\0\1\51\4\0\1\52\32\0"+
+    "\1\55\34\0\1\56\23\0\1\57\32\0\1\60\23\0"+
+    "\1\60\16\0\1\61\12\0\1\61\4\0\1\62\17\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[558];
+    int [] result = new int[1012];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -206,10 +219,11 @@ class Lexico {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\2\1\24\0\1\11\7\0\1\11";
+    "\1\0\1\11\2\1\30\0\1\1\2\0\1\11\11\0"+
+    "\1\11\7\0\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[33];
+    int [] result = new int[50];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -683,17 +697,22 @@ class Lexico {
             { System.out.print(yytext());
             }
             // fall through
-          case 4: break;
-          case 2:
-            { System.out.println("Encontro una declaracion Int");
-            }
-            // fall through
           case 5: break;
-          case 3:
-            { System.out.println("Encontro una declaracion Char");
+          case 2:
+            { System.out.println("IF con OPREL");
             }
             // fall through
           case 6: break;
+          case 3:
+            { System.out.println("Encontro una declaracion Int");
+            }
+            // fall through
+          case 7: break;
+          case 4:
+            { System.out.println("Encontro una declaracion Char");
+            }
+            // fall through
+          case 8: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
