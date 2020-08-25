@@ -1,1 +1,1 @@
-int vaso = 15 ;
+int vaso -> 15 ;
