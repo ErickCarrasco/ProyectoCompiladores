@@ -1,0 +1,120 @@
+Estructura del lenguaje EFE
+Declaración de variables
+int	ID = numericValue;
+char ID	= singleChar;
+bool ID	= state	;
+vector<Type> ID= []	;//Single Dimension
+vector<Type> ID= [ []M ]	;//2 Dimensions
+
+Operadores relacionales
+~= // distinto de
+=== // igual a
+> // mayor que
+< // menor que
+>= //mayor o igual a 
+<=//menor o igual a 
+= //asignación
+
+Operadores Logicos
+&& //Operador lógico and
+|| //Operador logico or
+
+Operadores aritméticos
++ //suma
+- //Resta
+* //Multiplicación
+/ //división
+% //Residuo de
+
+
+Bloques de decisión
+Caso Base:
+if (ExpresionCondicional) {
+	Expresion
+}	
+
+Caso Else if
+
+if(ExpresionCondicional){
+	Expresion
+}
+else if(ExpresionCondicional){
+	Expresion
+}
+
+Caso Else
+
+if(ExpresionCondicional){
+	expresion
+}
+...
+Else{
+	expresion
+}
+
+
+Iteración
+for(intDecl	;	comparacionConIntAnterior	;	incremento/decremento IntDeclaradoAnteriormente){
+	Expresion
+}
+
+While(changableValue){
+	Expresion
+	//Es necesario que el valor cambie durante la secuencia del while antes del “}”, 
+	//en otro caso el while sera infinito
+}
+
+Switch
+Switch(ValorCondicional){
+	//valor condicional puede ser int o char.
+	Case Contenido_ValorCondicional:
+		Expresion
+	break;
+
+	//este es un caso por defecto
+	Case default:
+		Expresion
+	break;
+}
+
+Lectura y escritura
+Scan(tipoDeDato); //Lectura de variables
+Sout(Variable); //escritura
+Soutln(variable); //Escritura con salto de línea
+
+Reglas de Comparación
+Comparación mayor o menor, mayor igual o menor igual, distinto e igual se puede usar para los ints sin problema
+
+Int < Int, int === int, int ~= int..
+
+Tipo boolean solo acepta comparación de igual o distinto
+
+bool === bool, bool~= bool
+
+Al igual que tipo chars 
+char === char, char ~= char
+
+Ejemplo
+Main(){
+Int x = 0;
+Char z = 0;
+Vector <int> j = [1,2,3,4];
+for(int i = 0; i < j; i++){
+	z = scan(Char);
+	sout(“hola”);
+	soutln(“hola x2”);
+	j.at(i);
+}
+
+Int y=1;
+Int a=3;
+
+if(a===y){
+	sout(“valido”);
+}else if (a>y){
+	sout(“Valor muy grande”);
+}else{
+	sout(“Desconocido”);
+}
+
+}
