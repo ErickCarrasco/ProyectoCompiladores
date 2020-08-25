@@ -1,10 +1,11 @@
-Estructura del lenguaje EFE
+Estructura del lenguaje NxR (Not eXactrly Ruby)
 Declaración de variables
-int	ID = numericValue;
-char ID	= singleChar;
-bool ID	= state	;
-vector<Type> ID= []	;//Single Dimension
-vector<Type> ID= [ []M ]	;//2 Dimensions
+def Int ID -> numericValue;
+Number <int> x = 0;
+def char ID	 -> singleChar;
+def faker ID -> state	; //son estados booleanos
+def vector|Type| ID-> []	;//Single Dimension
+def vector|Type| ID-> [ [] ]	;//2 Dimensions
 
 Operadores relacionales
 ~= // distinto de
@@ -13,7 +14,7 @@ Operadores relacionales
 < // menor que
 >= //mayor o igual a 
 <=//menor o igual a 
-= //asignación
+-> //asignación
 
 Operadores Logicos
 && //Operador lógico and
@@ -54,9 +55,9 @@ Else{
 
 
 Iteración
-for(intDecl	;	comparacionConIntAnterior	;	incremento/decremento IntDeclaradoAnteriormente){
+loop{
 	Expresion
-}
+}each(cantRepeticiones)
 
 While(changableValue){
 	Expresion
@@ -94,27 +95,3 @@ bool === bool, bool~= bool
 Al igual que tipo chars 
 char === char, char ~= char
 
-Ejemplo
-Main(){
-Int x = 0;
-Char z = 0;
-Vector <int> j = [1,2,3,4];
-for(int i = 0; i < j; i++){
-	z = scan(Char);
-	sout(“hola”);
-	soutln(“hola x2”);
-	j.at(i);
-}
-
-Int y=1;
-Int a=3;
-
-if(a===y){
-	sout(“valido”);
-}else if (a>y){
-	sout(“Valor muy grande”);
-}else{
-	sout(“Desconocido”);
-}
-
-}

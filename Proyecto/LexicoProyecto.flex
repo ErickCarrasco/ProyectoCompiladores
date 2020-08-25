@@ -15,8 +15,8 @@ espacios = [ \n\r\t]+
 OPREL = (>|<|===|~=|>=|<=)
 OPARITM=[+ - * / %]
 simbolosEsp=[-_]
-parenthesisOpen=[(]
-parenthesisClose=[)]
+parenthesisOpen = [(]
+parenthesisClose = [)]
 ID={letras}+{numeros}*
 
 declaracionInt = (int){espacios}{ID}{espacios}{asignacion}{espacios}*{numeros}+ {espacios}* {puntocoma}

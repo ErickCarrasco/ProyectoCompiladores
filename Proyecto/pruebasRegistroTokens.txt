@@ -1,2 +1,2 @@
 int vaso -> 15 ;
-if( x>y )	
+if( x===y )	
