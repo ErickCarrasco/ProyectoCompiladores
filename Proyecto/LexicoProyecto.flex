@@ -17,10 +17,15 @@ OPARITM=[+ - * / %]
 simbolosEsp=[-_]
 parenthesisOpen = [(]
 parenthesisClose = [)]
-ID={letras}+{numeros}*
+corcheteOpen = [{]
+corcheteClose = [}]
+ID={letras}+({numeros}*|{simbolosEsp}*)*
+Sent = {letras}*
 
-declaracionInt = (int){espacios}{ID}{espacios}{asignacion}{espacios}*{numeros}+ {espacios}* {puntocoma}
-declaracionBool= (faker){espacios}{ID}{espacios}{asignacion}{espacios}*(true|false){espacios}*{puntocoma}
+
+Loop = (for){corcheteOpen}{espacios}*{Sent}{espacios}{corcheteClose}(each){parenthesisOpen}{numeros}{parenthesisClose}
+declaracionInt = (def){espacios}(int){espacios}{ID}{espacios}{asignacion}{espacios}*{numeros}+ {espacios}* {puntocoma}
+declaracionBool= (def){espacios}(faker){espacios}{ID}{espacios}{asignacion}{espacios}*(true|false){espacios}*{puntocoma}
 stateIF = (if){parenthesisOpen}{espacios}* {ID} {OPREL} {ID} {espacios}*{parenthesisClose} 
 
 %%
@@ -31,4 +36,5 @@ stateIF = (if){parenthesisOpen}{espacios}* {ID} {OPREL} {ID} {espacios}*{parenth
 	{declaracionInt} 	{System.out.println("Encontro una declaracion Int");}
 	{declaracionBool} 	{System.out.println("Encontro una declaracion Char");}
 	{stateIF}	{System.out.println("IF con OPREL");}
+	{Loop}		{System.out.println("Loop encontrado");}
 }

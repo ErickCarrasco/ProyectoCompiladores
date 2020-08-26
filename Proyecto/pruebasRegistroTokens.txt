@@ -1,2 +1,5 @@
-int vaso -> 15 ;
+def int vaso_1 -> 15 ;
 if( x===y )	
+for{
+    ese
+}each(5)
