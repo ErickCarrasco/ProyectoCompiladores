@@ -1,7 +1,9 @@
 def int vaso_1  ;
+def Vector japokoreano;
 if( x===y ){
     def int x -> 2;
 }	
-for{
+
+loop{
     ese
 }each(5)
