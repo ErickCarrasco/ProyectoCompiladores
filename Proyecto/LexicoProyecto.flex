@@ -24,9 +24,14 @@ Sent = {letras}*
 
 
 Loop = (for){corcheteOpen}{espacios}*{Sent}{espacios}{corcheteClose}(each){parenthesisOpen}{numeros}{parenthesisClose}
-declaracionInt = (def){espacios}(int){espacios}{ID}{espacios}{asignacion}{espacios}*{numeros}+ {espacios}* {puntocoma}
-declaracionBool= (def){espacios}(faker){espacios}{ID}{espacios}{asignacion}{espacios}*(true|false){espacios}*{puntocoma}
-stateIF = (if){parenthesisOpen}{espacios}* {ID} {OPREL} {ID} {espacios}*{parenthesisClose} 
+
+declaracionInt = (def){espacios}+(int){espacios}+{ID}{espacios}*{asignacion}{espacios}*{numeros}+ {espacios}* {puntocoma}|(def){espacios}+(int){espacios}+{ID}{espacios}*{puntocoma}
+declaracionBool= (def){espacios}+(faker){espacios}+{ID}{espacios}*{asignacion}{espacios}*(true|false){espacios}*{puntocoma}|(def){espacios}+(faker){espacios}+{ID}{espacios}*{puntocoma}
+
+Expresion = {declaracionInt}|{declaracionBool}
+
+stateIF = (if){parenthesisOpen}{espacios}* {ID} {OPREL} {ID} {espacios}*{parenthesisClose} {corcheteOpen}{espacios}*{Expresion}*{espacios}*{corcheteClose}
+stateELSIF = (elsif){parenthesisOpen}{espacios}* {ID} {OPREL} {ID} {espacios}*{parenthesisClose}  {corcheteOpen}{espacios}*{Expresion}*{espacios}*{corcheteClose}
 
 %%
 
