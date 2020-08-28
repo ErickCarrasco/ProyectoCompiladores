@@ -1,5 +1,6 @@
 def int vaso_1  ;
-def Vector japokoreano;
+def vector japokoreano;
+while(eshta){S}
 if( x===y ){
     def int x -> 2;
 }	
