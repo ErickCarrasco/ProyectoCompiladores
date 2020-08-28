@@ -15,6 +15,7 @@ class Lexico {
 
   // Lexical states.
   public static final int YYINITIAL = 0;
+  public static final int COMMENT_PORTION = 2;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -23,7 +24,7 @@ class Lexico {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = {
-     0, 0
+     0,  0,  1, 1
   };
 
   /**
@@ -32,7 +33,7 @@ class Lexico {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\1\u0100\u10fe\u0200";
+    "\1\0\1\u0100\36\u0200\1\u0300\1\u0400\266\u0200\10\u0500\u1020\u0200";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -60,16 +61,21 @@ class Lexico {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\45\0\1\1\4\0\2\1\1\0\1\2\1\0\1\1"+
-    "\12\3\2\0\1\4\1\5\1\6\2\0\1\7\1\10"+
-    "\1\11\1\12\1\13\1\14\5\10\1\15\1\10\1\16"+
-    "\1\17\2\10\1\20\1\21\1\22\1\23\1\24\4\10"+
-    "\6\0\1\7\1\10\1\11\1\12\1\13\1\14\5\10"+
-    "\1\15\1\10\1\16\1\17\2\10\1\20\1\21\1\22"+
-    "\1\23\1\24\4\10\3\0\1\25\u0100\0\1\26\u0180\0";
+    "\11\0\1\1\1\2\2\3\1\2\22\0\1\1\2\0"+
+    "\1\4\1\0\1\5\2\0\1\6\1\7\2\5\1\0"+
+    "\1\10\1\0\1\5\12\11\1\0\1\12\1\13\1\14"+
+    "\1\15\2\0\1\16\1\17\1\20\1\21\1\22\1\23"+
+    "\1\24\1\25\1\26\1\24\1\27\1\30\1\24\1\31"+
+    "\1\32\1\33\1\24\1\34\1\35\1\36\1\37\1\40"+
+    "\1\41\3\24\1\42\1\0\1\43\1\0\1\24\1\0"+
+    "\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25"+
+    "\1\26\1\24\1\27\1\30\1\24\1\31\1\32\1\33"+
+    "\1\24\1\34\1\35\1\36\1\37\1\40\1\41\3\24"+
+    "\1\44\1\0\1\45\1\46\6\0\1\3\252\0\2\47"+
+    "\115\0\1\50\u01a8\0\2\3\u0100\0\1\51\325\0\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[768];
+    int [] result = new int[1536];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -93,12 +99,20 @@ class Lexico {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\2\2\1\3\1\4\1\1\10\5\1\1"+
-    "\1\6\1\4\1\0\4\5\1\4\2\5\1\7\1\10"+
-    "\3\5\1\0\1\11\1\5\1\11\1\5\1\12";
+    "\2\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7"+
+    "\1\5\1\10\1\11\1\12\1\1\16\13\1\14\1\15"+
+    "\1\16\1\17\3\1\1\2\1\20\1\21\1\12\1\0"+
+    "\7\13\1\22\2\13\1\12\6\13\1\22\4\0\1\23"+
+    "\2\13\1\0\1\24\2\13\1\0\2\13\1\0\1\13"+
+    "\1\25\1\0\4\13\1\0\3\13\1\0\1\25\2\0"+
+    "\1\13\2\26\1\13\1\27\1\30\1\13\1\0\1\30"+
+    "\1\13\2\0\2\31\1\32\1\33\1\34\1\13\1\0"+
+    "\1\35\2\13\1\0\1\33\1\34\2\36\1\13\2\37"+
+    "\1\40\1\35\1\40\2\13\1\0\1\13\2\41\1\0"+
+    "\1\13\1\42\2\43\1\44\1\42\1\45";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[37];
+    int [] result = new int[135];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -123,14 +137,26 @@ class Lexico {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\27\0\27\0\56\0\105\0\134\0\163\0\212"+
-    "\0\241\0\270\0\317\0\346\0\375\0\u0114\0\u012b\0\134"+
-    "\0\27\0\27\0\u0142\0\u0159\0\u0170\0\u0187\0\u019e\0\241"+
-    "\0\u01b5\0\u01cc\0\27\0\241\0\u01e3\0\u01fa\0\u0211\0\u0228"+
-    "\0\241\0\u023f\0\27\0\u0256\0\241";
+    "\0\0\0\52\0\124\0\176\0\124\0\124\0\124\0\124"+
+    "\0\124\0\250\0\322\0\124\0\374\0\u0126\0\u0150\0\u017a"+
+    "\0\u01a4\0\u01ce\0\u01f8\0\u0222\0\u024c\0\u0276\0\u02a0\0\u02ca"+
+    "\0\u02f4\0\u031e\0\u0348\0\u0372\0\124\0\124\0\124\0\124"+
+    "\0\374\0\u039c\0\u03c6\0\124\0\124\0\124\0\124\0\u03f0"+
+    "\0\u041a\0\u0444\0\u046e\0\u0498\0\u04c2\0\u04ec\0\u0516\0\u024c"+
+    "\0\u0540\0\u056a\0\u024c\0\u0594\0\u05be\0\u05e8\0\u0612\0\u063c"+
+    "\0\u0666\0\124\0\u0690\0\u06ba\0\u06e4\0\u070e\0\124\0\u0738"+
+    "\0\u0762\0\u078c\0\u07b6\0\u07e0\0\u080a\0\u0834\0\u085e\0\u0888"+
+    "\0\u08b2\0\u08dc\0\u024c\0\u0906\0\u0930\0\u095a\0\u0984\0\u09ae"+
+    "\0\u09d8\0\u0a02\0\u0a2c\0\u0a56\0\u0a80\0\124\0\u0aaa\0\u0ad4"+
+    "\0\u0afe\0\u024c\0\124\0\u0b28\0\u024c\0\u024c\0\u0b52\0\u0b7c"+
+    "\0\124\0\u0ba6\0\u0bd0\0\u0bfa\0\u024c\0\124\0\u024c\0\u024c"+
+    "\0\u0c24\0\u0c4e\0\u0c78\0\u024c\0\u0ca2\0\u0ccc\0\u0cf6\0\124"+
+    "\0\u0d20\0\u024c\0\124\0\u0d4a\0\u024c\0\124\0\u024c\0\124"+
+    "\0\124\0\u0d74\0\u0d9e\0\u0dc8\0\u0df2\0\u024c\0\124\0\u0e1c"+
+    "\0\u0e46\0\u024c\0\u024c\0\124\0\u024c\0\124\0\u024c";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[37];
+    int [] result = new int[135];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -153,28 +179,69 @@ class Lexico {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\1\3\1\4\1\5\1\6\1\7\1\6\1\10"+
-    "\2\11\1\12\1\11\1\13\1\11\1\14\1\15\2\11"+
-    "\1\16\1\11\1\17\1\20\1\2\35\0\1\21\23\0"+
-    "\1\5\30\0\1\22\26\0\1\23\24\0\1\11\3\0"+
-    "\7\11\1\24\6\11\5\0\1\11\3\0\16\11\5\0"+
-    "\1\11\3\0\4\11\1\25\11\11\5\0\1\11\3\0"+
-    "\1\26\15\11\5\0\1\11\3\0\10\11\1\27\5\11"+
-    "\5\0\1\11\3\0\11\11\1\30\4\11\5\0\1\11"+
-    "\3\0\11\11\1\31\4\11\5\0\1\11\3\0\4\11"+
-    "\1\32\11\11\7\0\1\33\24\0\1\11\3\0\3\11"+
-    "\1\30\12\11\5\0\1\11\3\0\5\11\1\34\10\11"+
-    "\5\0\1\11\3\0\6\11\1\35\7\11\5\0\1\11"+
-    "\3\0\13\11\1\30\2\11\5\0\1\11\3\0\14\11"+
-    "\1\36\1\11\5\0\1\11\3\0\2\11\1\37\13\11"+
-    "\5\0\1\11\3\0\12\11\1\36\3\11\1\0\1\40"+
-    "\3\0\1\11\3\0\4\11\1\41\11\11\5\0\1\11"+
-    "\3\0\13\11\1\42\2\11\15\0\1\43\16\0\1\11"+
-    "\3\0\10\11\1\44\5\11\5\0\1\11\3\0\11\11"+
-    "\1\45\4\11\2\0";
+    "\1\3\2\4\1\5\1\6\1\7\1\10\1\11\1\12"+
+    "\1\13\1\14\1\15\1\16\1\15\1\17\1\20\1\21"+
+    "\1\22\1\23\1\24\2\25\1\26\1\25\1\27\1\25"+
+    "\1\30\2\25\1\31\1\32\1\25\1\33\1\34\1\35"+
+    "\1\36\1\37\1\40\1\41\1\42\1\43\1\3\2\44"+
+    "\2\5\1\45\45\44\53\0\2\4\64\0\1\46\45\0"+
+    "\1\13\54\0\1\47\51\0\1\50\46\0\1\25\4\0"+
+    "\13\25\1\51\10\25\21\0\1\25\4\0\16\25\1\52"+
+    "\5\25\21\0\1\25\4\0\1\53\23\25\21\0\1\25"+
+    "\4\0\4\25\1\54\17\25\21\0\1\25\4\0\1\55"+
+    "\11\25\1\56\11\25\21\0\1\25\4\0\1\57\23\25"+
+    "\21\0\1\25\4\0\24\25\21\0\1\25\4\0\5\25"+
+    "\1\60\5\25\1\61\10\25\21\0\1\25\4\0\14\25"+
+    "\1\62\7\25\21\0\1\25\4\0\16\25\1\63\5\25"+
+    "\21\0\1\25\4\0\2\25\1\64\11\25\1\65\6\25"+
+    "\1\66\21\0\1\25\4\0\16\25\1\67\5\25\21\0"+
+    "\1\25\4\0\4\25\1\70\17\25\21\0\1\25\4\0"+
+    "\7\25\1\71\14\25\33\0\1\72\5\0\1\73\40\0"+
+    "\1\74\11\0\1\75\6\0\1\76\24\0\1\77\46\0"+
+    "\1\25\4\0\3\25\1\63\20\25\21\0\1\25\4\0"+
+    "\4\25\1\100\17\25\21\0\1\25\4\0\17\25\1\101"+
+    "\4\25\6\0\1\102\12\0\1\25\4\0\5\25\1\103"+
+    "\16\25\21\0\1\25\4\0\2\25\1\104\21\25\21\0"+
+    "\1\25\4\0\17\25\1\105\4\25\6\0\1\106\12\0"+
+    "\1\25\4\0\11\25\1\107\1\110\11\25\7\0\1\111"+
+    "\11\0\1\25\4\0\10\25\1\112\7\25\1\113\3\25"+
+    "\5\0\1\114\13\0\1\25\4\0\14\25\1\115\7\25"+
+    "\21\0\1\25\4\0\1\116\23\25\21\0\1\25\4\0"+
+    "\21\25\1\117\2\25\21\0\1\25\4\0\10\25\1\120"+
+    "\13\25\5\0\1\121\13\0\1\25\4\0\21\25\1\122"+
+    "\2\25\21\0\1\25\4\0\2\25\1\123\21\25\21\0"+
+    "\1\25\4\0\10\25\1\124\13\25\5\0\1\125\30\0"+
+    "\1\114\7\0\1\126\10\0\1\114\20\0\1\127\72\0"+
+    "\1\130\40\0\1\121\20\0\1\121\13\0\1\25\4\0"+
+    "\1\131\23\25\21\0\1\25\4\0\4\25\1\132\17\25"+
+    "\32\0\1\133\40\0\1\25\4\0\1\134\23\25\21\0"+
+    "\1\25\4\0\7\25\1\135\14\25\21\0\1\25\4\0"+
+    "\4\25\1\136\3\25\1\137\13\25\5\0\1\140\24\0"+
+    "\1\141\3\0\1\140\20\0\1\140\13\0\1\25\4\0"+
+    "\4\25\1\142\17\25\21\0\1\25\4\0\17\25\1\122"+
+    "\4\25\6\0\1\143\23\0\1\144\40\0\1\25\4\0"+
+    "\20\25\1\145\3\25\46\0\1\146\24\0\1\25\4\0"+
+    "\15\25\1\147\6\25\21\0\1\25\4\0\13\25\1\150"+
+    "\10\25\21\0\1\25\4\0\20\25\1\151\3\25\21\0"+
+    "\1\25\4\0\20\25\1\152\3\25\46\0\1\153\24\0"+
+    "\1\25\4\0\4\25\1\154\17\25\21\0\1\25\4\0"+
+    "\20\25\1\155\3\25\21\0\1\25\4\0\12\25\1\156"+
+    "\11\25\40\0\1\157\52\0\1\160\56\0\1\161\24\0"+
+    "\1\25\4\0\11\25\1\162\12\25\7\0\1\163\11\0"+
+    "\1\25\4\0\21\25\1\164\2\25\21\0\1\25\4\0"+
+    "\5\25\1\165\16\25\33\0\1\166\37\0\1\25\4\0"+
+    "\16\25\1\167\5\25\32\0\1\170\63\0\1\171\26\0"+
+    "\1\25\4\0\12\25\1\172\11\25\21\0\1\25\4\0"+
+    "\2\25\1\173\21\25\30\0\1\174\42\0\1\25\4\0"+
+    "\14\25\1\175\7\25\21\0\1\25\4\0\4\25\1\176"+
+    "\17\25\32\0\1\177\57\0\1\200\32\0\1\25\4\0"+
+    "\12\25\1\201\11\25\21\0\1\25\4\0\13\25\1\202"+
+    "\10\25\21\0\1\25\4\0\7\25\1\203\14\25\35\0"+
+    "\1\204\35\0\1\25\4\0\16\25\1\205\5\25\41\0"+
+    "\1\206\31\0\1\25\4\0\20\25\1\207\3\25\10\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[621];
+    int [] result = new int[3696];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -217,11 +284,17 @@ class Lexico {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\15\1\2\11\1\0\7\1\1\11\4\1"+
-    "\1\0\2\1\1\11\2\1";
+    "\2\0\1\11\1\1\5\11\2\1\1\11\20\1\4\11"+
+    "\3\1\4\11\1\0\21\1\1\11\4\0\1\11\2\1"+
+    "\1\0\3\1\1\0\2\1\1\0\2\1\1\0\4\1"+
+    "\1\0\3\1\1\0\1\11\2\0\2\1\1\11\4\1"+
+    "\1\0\1\11\1\1\2\0\1\1\1\11\4\1\1\0"+
+    "\3\1\1\0\1\11\2\1\1\11\2\1\1\11\1\1"+
+    "\2\11\2\1\1\0\2\1\1\11\1\0\3\1\1\11"+
+    "\1\1\1\11\1\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[37];
+    int [] result = new int[135];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -297,6 +370,9 @@ class Lexico {
   /** Whether the user-EOF-code has already been executed. */
   @SuppressWarnings("unused")
   private boolean zzEOFDone;
+
+  /* user code: */
+	public static int erroresLexicos = 0;
 
 
   /**
@@ -692,55 +768,191 @@ class Lexico {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
+            { System.out.println("Falla en lexico, char o variable no aceptada: " +yytext()+">. Linea: "+(yyline + 1)+ ", Columna: "+(yycolumn+1));
+							erroresLexicos++;
+            }
+            // fall through
+          case 38: break;
+          case 2:
+            { 
+            }
+            // fall through
+          case 39: break;
+          case 3:
             { System.out.print(yytext());
             }
             // fall through
-          case 11: break;
-          case 2:
+          case 40: break;
+          case 4:
+            { yybegin(COMMENT_PORTION);
+            }
+            // fall through
+          case 41: break;
+          case 5:
             { System.out.println("OPARITHM");
             }
             // fall through
-          case 12: break;
-          case 3:
+          case 42: break;
+          case 6:
+            { System.out.println("left parentesis");
+            }
+            // fall through
+          case 43: break;
+          case 7:
+            { System.out.println("right parentesis");
+            }
+            // fall through
+          case 44: break;
+          case 8:
             { System.out.println("Integer");
             }
             // fall through
-          case 13: break;
-          case 4:
+          case 45: break;
+          case 9:
+            { System.out.println("semicolon");
+            }
+            // fall through
+          case 46: break;
+          case 10:
             { System.out.println("OPREL");
             }
             // fall through
-          case 14: break;
-          case 5:
+          case 47: break;
+          case 11:
             { System.out.println("ID");
             }
             // fall through
-          case 15: break;
-          case 6:
+          case 48: break;
+          case 12:
+            { System.out.println("left bracket");
+            }
+            // fall through
+          case 49: break;
+          case 13:
+            { System.out.println("right bracket");
+            }
+            // fall through
+          case 50: break;
+          case 14:
+            { System.out.println("left curvy bracket");
+            }
+            // fall through
+          case 51: break;
+          case 15:
+            { System.out.println("right curvy bracket");
+            }
+            // fall through
+          case 52: break;
+          case 16:
+            { yybegin(YYINITIAL);
+            }
+            // fall through
+          case 53: break;
+          case 17:
             { System.out.println("Assignment");
             }
             // fall through
-          case 16: break;
-          case 7:
+          case 54: break;
+          case 18:
+            { System.out.println("If block");
+            }
+            // fall through
+          case 55: break;
+          case 19:
             { System.out.println("equals (===)");
             }
             // fall through
-          case 17: break;
-          case 8:
+          case 56: break;
+          case 20:
             { System.out.println("Define or def");
             }
             // fall through
-          case 18: break;
-          case 9:
+          case 57: break;
+          case 21:
+            { System.out.println("int reserved word");
+            }
+            // fall through
+          case 58: break;
+          case 22:
+            { System.out.println("case");
+            }
+            // fall through
+          case 59: break;
+          case 23:
+            { System.out.println("'each' of a loop");
+            }
+            // fall through
+          case 60: break;
+          case 24:
+            { System.out.println("else");
+            }
+            // fall through
+          case 61: break;
+          case 25:
+            { System.out.println("INIT");
+            }
+            // fall through
+          case 62: break;
+          case 26:
+            { System.out.println("Loop");
+            }
+            // fall through
+          case 63: break;
+          case 27:
+            { System.out.println("scan");
+            }
+            // fall through
+          case 64: break;
+          case 28:
+            { System.out.println("sout");
+            }
+            // fall through
+          case 65: break;
+          case 29:
             { System.out.println("Faker");
             }
             // fall through
-          case 19: break;
-          case 10:
-            { System.out.println("Vector");
+          case 66: break;
+          case 30:
+            { System.out.println("break");
             }
             // fall through
-          case 20: break;
+          case 67: break;
+          case 31:
+            { System.out.println("elsif");
+            }
+            // fall through
+          case 68: break;
+          case 32:
+            { System.out.println("faker reserved word");
+            }
+            // fall through
+          case 69: break;
+          case 33:
+            { System.out.println("while case");
+            }
+            // fall through
+          case 70: break;
+          case 34:
+            { System.out.println("soutln");
+            }
+            // fall through
+          case 71: break;
+          case 35:
+            { System.out.println("switch");
+            }
+            // fall through
+          case 72: break;
+          case 36:
+            { System.out.println("vector reserved word");
+            }
+            // fall through
+          case 73: break;
+          case 37:
+            { System.out.println("default");
+            }
+            // fall through
+          case 74: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

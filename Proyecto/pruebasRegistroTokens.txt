@@ -1,10 +1,12 @@
-def int vaso_1  ;
-def vector japokoreano;
-while(eshta){S}
-if( x===y ){
-    def int x -> 2;
-}	
-
-loop{
-    ese
-}each(5)
+init(){
+    def int x -> 1;
+    def int i -> 0;
+    def faker -> true;
+    if( faker === true ){
+        x++;
+    }
+    loop{
+        i -> i+1;
+        sout(i);
+    }each(i < x);
+}
