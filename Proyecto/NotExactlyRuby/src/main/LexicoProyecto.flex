@@ -1,4 +1,6 @@
 import java_cup.runtime.*;
+import java.io.Reader;
+
 
 %%
 
@@ -48,7 +50,7 @@ spaces = [ \n\r\t]+
 semicolon = ";"
 lpar = "("
 rpar = ")"
-dot = "."
+//dot = "."
 comma = ","
 colon = ":"
 left_Sbracket = "["
@@ -56,7 +58,7 @@ right_Sbracket = "]"
 l_Cbracket = "{"
 r_Cbracket = "}"
 pipe = "|"
-special_characters = "^"|@|"$"|#|&|"%"|"'"|"?"|"!"
+//special_characters = "^"|@|"$"|#|&|"%"|"'"|"?"|"!"
 
 //Comment char
 hashComment = "#"
@@ -88,7 +90,7 @@ hashComment = "#"
 	"func"				{return new Symbol(sym.FUNC, yycolumn, yyline, yytext());}
 	"payback"			{return new Symbol(sym.PAYBACK, yycolumn, yyline, yytext());}
 	"nothing"			{return new Symbol(sym.NOTHING, yycolumn, yyline, yytext());}
-	"default"			{return new Symbol(sym.DEFAULT, yycolumn, yyline, yytext());}
+	"defalt"			{return new Symbol(sym.DEFALT, yycolumn, yyline, yytext());}
 
 	//vals
 	{int}				{return new Symbol(sym.INTEGER, yycolumn, yyline, yytext());}
@@ -100,19 +102,19 @@ hashComment = "#"
 	{op_suma}			{return new Symbol(sym.OPSUMA, yycolumn, yyline, yytext());}
 	{op_mult}			{return new Symbol(sym.OPMULT, yycolumn, yyline, yytext());}
 	{op_res}			{return new Symbol(sym.OPRES, yycolumn, yyline, yytext());}
-	{assignment}		{return new Symbol(sym.ASSIGNMENT, yycolumn, yyline, yytext());}
+	{assignment}                    {return new Symbol(sym.ASSIGNMENT, yycolumn, yyline, yytext());}
 	{ID}				{return new Symbol(sym.ID, yycolumn, yyline, yytext());}
 	{colon}				{return new Symbol(sym.COLON, yycolumn, yyline, yytext());}
 	{semicolon}			{return new Symbol(sym.SEMICOLON, yycolumn, yyline, yytext());}
 	{lpar}				{return new Symbol(sym.LPAR, yycolumn, yyline, yytext());}
 	{rpar}				{return new Symbol(sym.RPAR, yycolumn, yyline, yytext());}
-	{left_Sbracket}		{return new Symbol(sym.LSBRACKET, yycolumn, yyline, yytext());}
-	{right_Sbracket}	{return new Symbol(sym.RSBRACKET, yycolumn, yyline, yytext());}
-	{l_Cbracket}		{return new Symbol(sym.LCBRACKET, yycolumn, yyline, yytext());}
-	{r_Cbracket}		{return new Symbol(sym.RCBRACKET, yycolumn, yyline, yytext());}
+	{left_Sbracket}                 {return new Symbol(sym.LSBRACKET, yycolumn, yyline, yytext());}
+	{right_Sbracket}                {return new Symbol(sym.RSBRACKET, yycolumn, yyline, yytext());}
+	{l_Cbracket}                    {return new Symbol(sym.LCBRACKET, yycolumn, yyline, yytext());}
+	{r_Cbracket}                    {return new Symbol(sym.RCBRACKET, yycolumn, yyline, yytext());}
 	{comma}				{return new Symbol(sym.COMMA, yycolumn, yyline, yytext());}
 	{pipe}				{return new Symbol(sym.PIPE, yycolumn, yyline, yytext());}
-	{hashComment}		{yybegin(COMMENT_PORTION);}
+	{hashComment}                   {yybegin(COMMENT_PORTION);}
 	{spaces}			{}
 	.
 						{

@@ -1,0 +1,61 @@
+import java.io.*;
+import java_cup.runtime.*;
+import java.util.*;
+
+parser code
+{:
+ /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+       // System.out.println("Error Sintáctico en la Línea " + (s.left) +
+       // " Columna "+s.right+ ". No se esperaba este componente: " +s.value+".");
+       System.out.println("Sintaxis correcta");
+    } 
+
+    /**
+     * Método al que se llama automáticamente ante algún error sintáctico 
+     * en el que ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        //System.out.println("Error síntactico irrecuperable en la Línea " + 
+        //(s.left)+ " Columna "+s.right+". Componente " + s.value + 
+        //" no reconocido.");
+        System.out.println("Sintaxis correcta"); 
+    } 
+:}
+
+terminal LPAR, RPAR, LSBRACKET, RSBRACKET, LCBRACKET, RCBRACKET, COLON, ASSIGNMENT, SEMICOLON;
+
+terminal BOOL, OPREL, OPSUMA, OPMULT, OPRES, VECTOR, CASE, IF, WHILE, LOOP, ELSIF, ELSE, FUNC, INTEGER, PIPE;
+
+terminal SCAN, SOUT, SOUTLN, BREAK, DEFAULT, SWITCH, INT, DEF, FAKER, NOTHING, DEFAULT, PAYBACK, EACH, INIT;
+
+terminal ID, LETTERS, CHAR;
+
+non terminal Program;
+non terminal declaraciones;
+non terminal decl_v_e;
+non terminal declaracion_vec;
+non terminal List<declaraciones> declaracionesLista;
+non terminal tipo;
+non terminal tipoV;
+non terminal values;
+
+
+declaraciones ::= DEF  tipo ID decl_v_e;
+
+decl_v_e ::= SEMICOLON
+        |   ASSIGNMENT values SEMICOLON
+
+tipo ::= INT
+        | FAKER
+        | CHAR;
+
+tipoV ::= DEF VECTOR PIPE tipo PIPE ID ;
+
+values ::= BOOL
+        | LETTERS
+        | INTEGER;
+
+

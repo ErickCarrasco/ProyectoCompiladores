@@ -39,7 +39,7 @@ Caso Else if
 if(ExpresionCondicional){
 	Expresion
 }
-else if(ExpresionCondicional){
+elsif(ExpresionCondicional){
 	Expresion
 }
 

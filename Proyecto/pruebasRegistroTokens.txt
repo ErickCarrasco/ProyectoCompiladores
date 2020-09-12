@@ -1,12 +1,13 @@
 init(){
     def int x -> 1;
     def int i -> 0;
+    def vector |int| v -> [1,2,3]; 
     def faker -> true;
     if( faker === true ){
         x++;
     }
     loop{
         i -> i+1;
-        sout(i);
+        soutln(v[i]);
     }each(i < x);
 }
