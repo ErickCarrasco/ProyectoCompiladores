@@ -49,6 +49,7 @@ non terminal prop_emp;
 non terminal prop_desemp;
 non terminal asignacion;
 non terminal forLoop;
+non terminal switchCase;
 
 start with Program;
 
@@ -77,7 +78,6 @@ asignacion ::= ASSIGNMENT values SEMICOLON
         | ASSIGNMENT NOTHING SEMICOLON;
 
 
-
 tipo ::= 
         INT |
         FAKER |
@@ -95,10 +95,16 @@ values ::= BOOL
 
 //ifNEmp::= IF expression LCBRACKET proposition RCBRACKET;
 
-ifStatement = IF expression LCBRACKET proposition RCBRACKET elsiffer;
+ifStatement ::= IF expression LCBRACKET proposition RCBRACKET elsiffer;
 
-elsiffer::=ELSIF expression LCBRACKET proposition RCBRACKET elsiffer
-        | ELSE LCBRACKET proposition RCBRACKET;
+elsiffer::= ELSIF expression LCBRACKET proposition RCBRACKET elsiffer
+        | ELSE LCBRACKET proposition RCBRACKET
+        | ;
+
+
+switchCase ::=;
+
+cases::= ;
 
 expression ::= expresion_simple
 	| expresion_simple OPREL expresion_simple;
