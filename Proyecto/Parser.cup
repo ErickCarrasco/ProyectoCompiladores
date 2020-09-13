@@ -4,58 +4,126 @@ import java.util.*;
 
 parser code
 {:
- /**
-     * Método al que se llama automáticamente ante algún error sintactico.
-     **/ 
-    public void syntax_error(Symbol s){ 
-       // System.out.println("Error Sintáctico en la Línea " + (s.left) +
-       // " Columna "+s.right+ ". No se esperaba este componente: " +s.value+".");
-       System.out.println("Sintaxis correcta");
-    } 
-
-    /**
-     * Método al que se llama automáticamente ante algún error sintáctico 
-     * en el que ya no es posible una recuperación de errores.
-     **/ 
-    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
-        //System.out.println("Error síntactico irrecuperable en la Línea " + 
-        //(s.left)+ " Columna "+s.right+". Componente " + s.value + 
-        //" no reconocido.");
-        System.out.println("Sintaxis correcta"); 
-    } 
+        public void syntax_error(Symbol s) {
+                System.out.println("compiler has detected a syntax error at line " + s.left 
+                + " column " + s.right);
+	}
 :}
 
-terminal LPAR, RPAR, LSBRACKET, RSBRACKET, LCBRACKET, RCBRACKET, COLON, ASSIGNMENT, SEMICOLON;
+//Lexemas
+terminal String BOOL, LETTERS, INTEGER, NOTHING;
+terminal String ID;
 
-terminal BOOL, OPREL, OPSUMA, OPMULT, OPRES, VECTOR, CASE, IF, WHILE, LOOP, ELSIF, ELSE, FUNC, INTEGER, PIPE;
 
-terminal SCAN, SOUT, SOUTLN, BREAK, DEFAULT, SWITCH, INT, DEF, FAKER, NOTHING, DEFAULT, PAYBACK, EACH, INIT;
+//Palabras reservadas, y Operadores
+terminal LPAR, RPAR, LSBRACKET, RSBRACKET, LCBRACKET, RCBRACKET, COLON, ASSIGNMENT, SEMICOLON, COMMA;
 
-terminal ID, LETTERS, CHAR;
+terminal OPREL, OPSUMA, OPMULT, OPRES, VECTOR, CASE, IF, WHILE, LOOP, ELSIF, ELSE, FUNC, PIPE;
+
+terminal SCAN, SOUT, SOUTLN, BREAK, DEFAULT, SWITCH, INT, DEF, FAKER, DEFAULT, PAYBACK, EACH, INIT, NOT;
+
+terminal CHAR;
+
+//No TERMINALES
 
 non terminal Program;
 non terminal declaraciones;
 non terminal decl_v_e;
 non terminal declaracion_vec;
-non terminal List<declaraciones> declaracionesLista;
 non terminal tipo;
 non terminal tipoV;
 non terminal values;
+non terminal ifStatement;
+non terminal expression;
+non terminal expresion_simple;
+non terminal termino;
+non terminal factor;
+non terminal factor_for;
+non terminal signo;
+non terminal declaracionSimple;
+non terminal functions;
+non terminal params;
+non terminal elsiffer;
+non terminal propsition;
+non terminal prop_emp;
+non terminal prop_desemp;
+non terminal asignacion;
+non terminal forLoop;
+
+start with Program;
+
+Program ::= INIT LPAR RPAR LCBRACKET body RCBRACKET;
+declaraciones ::=  DEF  tipo  lista_ID SEMICOLON;
+
+proposition ::= WHILE expression LCBRACKET proposition RCBRACKET;
+        | forLoop
+        | ifStatement
+        | ID ASSIGNMENT expression;
+
+forLoop::= LOOP LSBRACKET proposition RSBRACKET EACH LPAR ID RPAR;
+
+declaracionSimple ::= DEF tipo ID decl_v_e;
+
+functions::= FUNC tipo ID LPAR params RPAR LCBRACKET body RCBRACKET;
 
 
-declaraciones ::= DEF  tipo ID decl_v_e;
+lista_ID ::= ID 
+        | lista_ID COMMA ID;
 
 decl_v_e ::= SEMICOLON
-        |   ASSIGNMENT values SEMICOLON
+        |   asignacion;
 
-tipo ::= INT
-        | FAKER
-        | CHAR;
+asignacion ::= ASSIGNMENT values SEMICOLON
+        | ASSIGNMENT NOTHING SEMICOLON;
+
+
+
+tipo ::= 
+        INT |
+        FAKER |
+        CHAR;
 
 tipoV ::= DEF VECTOR PIPE tipo PIPE ID ;
 
 values ::= BOOL
         | LETTERS
         | INTEGER;
+
+//ifStatement::= ifEmp | ifNEmp;
+
+//ifEmp::= IF expression LCBRACKET proposition RCBRACKET elsiffer;
+
+//ifNEmp::= IF expression LCBRACKET proposition RCBRACKET;
+
+ifStatement = IF expression LCBRACKET proposition RCBRACKET elsiffer;
+
+elsiffer::=ELSIF expression LCBRACKET proposition RCBRACKET elsiffer
+        | ELSE LCBRACKET proposition RCBRACKET;
+
+expression ::= expresion_simple
+	| expresion_simple OPREL expresion_simple;
+
+expresion_simple ::= termino
+	| signo termino
+	| expresion_simple OPSUM termino;
+
+termino ::= factor
+	| termino OPMULT factor;
+
+factor ::= ID
+	| ID LPAR lista_expresiones RPAR
+	| INT
+	| LPAR expresion RPAR
+	| NOT factor;
+
+factor_for ::= ID
+	| INT
+	| signo INT;
+
+signo ::= OPSUM;
+
+lista_expresiones::= expression | lista_expresiones COMMA expression;
+
+     
 
 

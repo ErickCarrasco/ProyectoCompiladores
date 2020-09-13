@@ -30,10 +30,12 @@ bool = true|false
 //ID
 ID = {letters}({digit}|{letters})*
 
-
+not = "~"
+and = and
+or = or
 equals = "==="
 //OPREL
-op_rel = "~="|">"|"<"|">="|"<="|and|or
+op_rel = "~="|">"|"<"|">="|"<="|{and}|{or}|{not}
 //OPARITMETHIC
 //op_arith = "+"|-|"*"|"/"|"%"
 op_suma = "+"|-
@@ -57,6 +59,7 @@ l_Cbracket = "{"
 r_Cbracket = "}"
 pipe = "|"
 special_characters = "^"|@|"$"|#|&|"%"|"'"|"?"|"!"
+
 
 //Comment char
 hashComment = "#"
@@ -97,6 +100,7 @@ hashComment = "#"
 	{equals}			{return new Symbol(sym.EQUALS, yycolumn, yyline, yytext());}
 	{op_rel}			{return new Symbol(sym.OPREL, yycolumn, yyline, yytext());}
 	//{op_arith}			{return new Symbol(sym.OPARTHM, yycolumn, yyline, yytext());}
+	{not}				{return new Symbol(sym.NOT, yycolumn, yyline, yytext());}
 	{op_suma}			{return new Symbol(sym.OPSUMA, yycolumn, yyline, yytext());}
 	{op_mult}			{return new Symbol(sym.OPMULT, yycolumn, yyline, yytext());}
 	{op_res}			{return new Symbol(sym.OPRES, yycolumn, yyline, yytext());}

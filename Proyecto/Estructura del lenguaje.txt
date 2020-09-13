@@ -95,3 +95,28 @@ bool === bool, bool~= bool
 Al igual que tipo chars 
 char === char, char ~= char
 
+
+INIT(){
+def int x -> 0;
+def char z -> 0;
+def Vector |int| j -> [1,2,3,4];
+loop{
+	z -> scan(Char);
+	sout(“hola”);
+	soutln(“hola x2”);
+	j.at(i);
+}each(j)
+
+def int y -> 1;
+def int a-> 0;
+
+if(a===y){
+	sout(“valido”);
+}elsif (a>y){
+	sout(“Valor muy grande”);
+}else{
+	sout(“Desconocido”);
+}
+
+}
+
