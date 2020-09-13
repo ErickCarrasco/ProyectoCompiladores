@@ -6,52 +6,58 @@
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int CHAR = 42;
-  public static final int ASSIGNMENT = 9;
-  public static final int ELSIF = 21;
-  public static final int CASE = 17;
-  public static final int EACH = 38;
-  public static final int INTEGER = 24;
-  public static final int INT = 32;
-  public static final int INIT = 39;
-  public static final int PAYBACK = 37;
-  public static final int SCAN = 26;
-  public static final int RCBRACKET = 7;
-  public static final int SOUT = 27;
-  public static final int OPSUMA = 13;
-  public static final int SEMICOLON = 10;
-  public static final int RPAR = 3;
-  public static final int OPRES = 15;
-  public static final int BOOL = 11;
-  public static final int OPREL = 12;
-  public static final int LOOP = 20;
-  public static final int IF = 18;
-  public static final int ID = 40;
-  public static final int FAKER = 34;
+  public static final int CHAR = 43;
+  public static final int ASSIGNMENT = 14;
+  public static final int ELSIF = 26;
+  public static final int CASE = 22;
+  public static final int EACH = 40;
+  public static final int INTEGER = 4;
+  public static final int INT = 36;
+  public static final int INIT = 41;
+  public static final int PAYBACK = 39;
+  public static final int SCAN = 30;
+  public static final int RCBRACKET = 12;
+  public static final int NOT = 42;
+  public static final int SOUT = 31;
+  public static final int SEMICOLON = 15;
+  public static final int OPSUMA = 18;
+  public static final int RPAR = 8;
+  public static final int OPRES = 20;
+  public static final int BOOL = 2;
+  public static final int COMMA = 16;
+  public static final int OPREL = 17;
+  public static final int LOOP = 25;
+  public static final int IF = 23;
+  public static final int FAKER = 38;
+  public static final int ID = 6;
   public static final int EOF = 0;
-  public static final int RSBRACKET = 5;
+  public static final int RSBRACKET = 10;
   public static final int error = 1;
-  public static final int PIPE = 25;
-  public static final int BREAK = 29;
-  public static final int VECTOR = 16;
-  public static final int SWITCH = 31;
-  public static final int LETTERS = 41;
-  public static final int COLON = 8;
-  public static final int DEFALT = 36;
-  public static final int ELSE = 22;
-  public static final int LCBRACKET = 6;
-  public static final int FUNC = 23;
-  public static final int WHILE = 19;
-  public static final int SOUTLN = 28;
-  public static final int DEFAULT = 30;
-  public static final int LPAR = 2;
-  public static final int DEF = 33;
-  public static final int NOTHING = 35;
-  public static final int OPMULT = 14;
-  public static final int LSBRACKET = 4;
+  public static final int PIPE = 29;
+  public static final int BREAK = 33;
+  public static final int VECTOR = 21;
+  public static final int SWITCH = 35;
+  public static final int LETTERS = 3;
+  public static final int COLON = 13;
+  public static final int ELSE = 27;
+  public static final int LCBRACKET = 11;
+  public static final int FUNC = 28;
+  public static final int WHILE = 24;
+  public static final int SOUTLN = 32;
+  public static final int DEFAULT = 34;
+  public static final int LPAR = 7;
+  public static final int DEF = 37;
+  public static final int NOTHING = 5;
+  public static final int OPMULT = 19;
+  public static final int LSBRACKET = 9;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
+  "BOOL",
+  "LETTERS",
+  "INTEGER",
+  "NOTHING",
+  "ID",
   "LPAR",
   "RPAR",
   "LSBRACKET",
@@ -61,7 +67,7 @@ public class sym {
   "COLON",
   "ASSIGNMENT",
   "SEMICOLON",
-  "BOOL",
+  "COMMA",
   "OPREL",
   "OPSUMA",
   "OPMULT",
@@ -74,7 +80,6 @@ public class sym {
   "ELSIF",
   "ELSE",
   "FUNC",
-  "INTEGER",
   "PIPE",
   "SCAN",
   "SOUT",
@@ -85,13 +90,10 @@ public class sym {
   "INT",
   "DEF",
   "FAKER",
-  "NOTHING",
-  "DEFALT",
   "PAYBACK",
   "EACH",
   "INIT",
-  "ID",
-  "LETTERS",
+  "NOT",
   "CHAR"
   };
 }
