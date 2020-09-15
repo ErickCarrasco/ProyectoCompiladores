@@ -1,0 +1,7 @@
+init(){ 
+	if(xargos>=echo){
+		data -> 11;
+	}elsif(xargos <= echo){
+ 		data -> 10;}
+	}
+}

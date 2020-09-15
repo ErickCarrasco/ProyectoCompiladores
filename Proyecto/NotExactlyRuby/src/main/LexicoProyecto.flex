@@ -1,21 +1,36 @@
+package main;
 import java_cup.runtime.*;
+import java.io.Reader;
 
 %%
 
+%{
+	public static int erroresLexicos = 0;
+        public void imprime(String texto){
+            System.out.println(": "+texto);
+        }
+
+%}
+
+
 %unicode
 %class Lexico
+%public 
 %int
 %ignorecase
 %line
 %column
 %standalone
 %cup
+%char
+%eofval{
+System.out.println("FIN DEL ARCHIVO");
+System.exit(0);
+%eofval}
 
 //Contador errores lexicos
 
-%{
-	public static int erroresLexicos = 0;
-%}
+
 
 //initial data
 letters = [a-zA-Z]|"_"
@@ -35,7 +50,7 @@ and = and
 or = or
 equals = "==="
 //OPREL
-op_rel = "~="|">"|"<"|">="|"<="|{and}|{or}|{not}
+op_rel = "~="|">"|"<"|">="|"<="|{and}|{or}|{not}|{equals}
 //OPARITMETHIC
 //op_arith = "+"|-|"*"|"/"|"%"
 op_suma = "+"|-
@@ -58,7 +73,7 @@ right_Sbracket = "]"
 l_Cbracket = "{"
 r_Cbracket = "}"
 pipe = "|"
-special_characters = "^"|@|"$"|#|&|"%"|"'"|"?"|"!"
+//special_characters = "^"|@|"$"|#|&|"%"|"'"|"?"|"!"
 
 
 //Comment char
@@ -70,7 +85,7 @@ hashComment = "#"
 
 <YYINITIAL>{
 	//reserved Words
-	"init"				{return new Symbol(sym.INIT, yycolumn, yyline, yytext());}
+	"init"				{imprime("init"); return new Symbol(sym.INIT, yycolumn, yyline, yytext());}
 	"int"				{return new Symbol(sym.INT, yycolumn, yyline, yytext());}
 	"faker"				{return new Symbol(sym.FAKER, yycolumn, yyline, yytext());}
 	"char"				{return new Symbol(sym.CHAR, yycolumn, yyline, yytext());}
@@ -94,13 +109,14 @@ hashComment = "#"
 	"default"			{return new Symbol(sym.DEFAULT, yycolumn, yyline, yytext());}
 
 	//vals
+    {not}				{return new Symbol(sym.NOT, yycolumn, yyline, yytext());}
 	{int}				{return new Symbol(sym.INTEGER, yycolumn, yyline, yytext());}
 	{letters}			{return new Symbol(sym.LETTERS, yycolumn, yyline, yytext());}
 	{bool}				{return new Symbol(sym.BOOL, yycolumn, yyline, yytext());}
-	{equals}			{return new Symbol(sym.EQUALS, yycolumn, yyline, yytext());}
+	//{equals}			{return new Symbol(sym.EQUA, yycolumn, yyline, yytext());}
 	{op_rel}			{return new Symbol(sym.OPREL, yycolumn, yyline, yytext());}
 	//{op_arith}			{return new Symbol(sym.OPARTHM, yycolumn, yyline, yytext());}
-	{not}				{return new Symbol(sym.NOT, yycolumn, yyline, yytext());}
+	
 	{op_suma}			{return new Symbol(sym.OPSUMA, yycolumn, yyline, yytext());}
 	{op_mult}			{return new Symbol(sym.OPMULT, yycolumn, yyline, yytext());}
 	{op_res}			{return new Symbol(sym.OPRES, yycolumn, yyline, yytext());}

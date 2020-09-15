@@ -35,7 +35,7 @@ and = and
 or = or
 equals = "==="
 //OPREL
-op_rel = "~="|">"|"<"|">="|"<="|{and}|{or}|{not}
+op_rel = "~="|">"|"<"|">="|"<="|{and}|{or}|{not}|{equals}
 //OPARITMETHIC
 //op_arith = "+"|-|"*"|"/"|"%"
 op_suma = "+"|-
@@ -97,7 +97,7 @@ hashComment = "#"
 	{int}				{return new Symbol(sym.INTEGER, yycolumn, yyline, yytext());}
 	{letters}			{return new Symbol(sym.LETTERS, yycolumn, yyline, yytext());}
 	{bool}				{return new Symbol(sym.BOOL, yycolumn, yyline, yytext());}
-	{equals}			{return new Symbol(sym.EQUALS, yycolumn, yyline, yytext());}
+	//{equals}			{return new Symbol(sym.EQUA, yycolumn, yyline, yytext());}
 	{op_rel}			{return new Symbol(sym.OPREL, yycolumn, yyline, yytext());}
 	//{op_arith}			{return new Symbol(sym.OPARTHM, yycolumn, yyline, yytext());}
 	{not}				{return new Symbol(sym.NOT, yycolumn, yyline, yytext());}
