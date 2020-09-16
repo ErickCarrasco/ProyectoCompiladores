@@ -397,7 +397,7 @@ public class Lexico implements java_cup.runtime.Scanner {
 
   /* user code: */
 	public static int erroresLexicos = 0;
-        public void imprime(String texto){
+        public void printer(String texto){
             System.out.println(": "+texto);
         }
 
@@ -834,87 +834,87 @@ System.exit(0);
             // fall through
           case 51: break;
           case 5:
-            { return new Symbol(sym.OPRES, yycolumn, yyline, yytext());
+            { printer("residuo"); return new Symbol(sym.OPRES, yycolumn, yyline, yytext());
             }
             // fall through
           case 52: break;
           case 6:
-            { return new Symbol(sym.LPAR, yycolumn, yyline, yytext());
+            { printer("("); return new Symbol(sym.LPAR, yycolumn, yyline, yytext());
             }
             // fall through
           case 53: break;
           case 7:
-            { return new Symbol(sym.RPAR, yycolumn, yyline, yytext());
+            { printer(")"); return new Symbol(sym.RPAR, yycolumn, yyline, yytext());
             }
             // fall through
           case 54: break;
           case 8:
-            { return new Symbol(sym.OPMULT, yycolumn, yyline, yytext());
+            { printer("op_mult"); return new Symbol(sym.OPMULT, yycolumn, yyline, yytext());
             }
             // fall through
           case 55: break;
           case 9:
-            { return new Symbol(sym.OPSUMA, yycolumn, yyline, yytext());
+            { printer("op_suma"); return new Symbol(sym.OPSUMA, yycolumn, yyline, yytext());
             }
             // fall through
           case 56: break;
           case 10:
-            { return new Symbol(sym.COMMA, yycolumn, yyline, yytext());
+            { printer("comma"); return new Symbol(sym.COMMA, yycolumn, yyline, yytext());
             }
             // fall through
           case 57: break;
           case 11:
-            { return new Symbol(sym.INTEGER, yycolumn, yyline, yytext());
+            { printer("int"); return new Symbol(sym.INTEGER, yycolumn, yyline, yytext());
             }
             // fall through
           case 58: break;
           case 12:
-            { return new Symbol(sym.COLON, yycolumn, yyline, yytext());
+            { printer(":"); return new Symbol(sym.COLON, yycolumn, yyline, yytext());
             }
             // fall through
           case 59: break;
           case 13:
-            { return new Symbol(sym.SEMICOLON, yycolumn, yyline, yytext());
+            { printer(";"); return new Symbol(sym.SEMICOLON, yycolumn, yyline, yytext());
             }
             // fall through
           case 60: break;
           case 14:
-            { return new Symbol(sym.OPREL, yycolumn, yyline, yytext());
+            { printer("op_rel"); return new Symbol(sym.OPREL, yycolumn, yyline, yytext());
             }
             // fall through
           case 61: break;
           case 15:
-            { return new Symbol(sym.LETTERS, yycolumn, yyline, yytext());
+            { printer("letters"); return new Symbol(sym.LETTERS, yycolumn, yyline, yytext());
             }
             // fall through
           case 62: break;
           case 16:
-            { return new Symbol(sym.LSBRACKET, yycolumn, yyline, yytext());
+            { printer("left_Sbrckt"); return new Symbol(sym.LSBRACKET, yycolumn, yyline, yytext());
             }
             // fall through
           case 63: break;
           case 17:
-            { return new Symbol(sym.RSBRACKET, yycolumn, yyline, yytext());
+            { printer("right_Sbrckt"); return new Symbol(sym.RSBRACKET, yycolumn, yyline, yytext());
             }
             // fall through
           case 64: break;
           case 18:
-            { return new Symbol(sym.LCBRACKET, yycolumn, yyline, yytext());
+            { printer("l_Cbrckt"); return new Symbol(sym.LCBRACKET, yycolumn, yyline, yytext());
             }
             // fall through
           case 65: break;
           case 19:
-            { return new Symbol(sym.PIPE, yycolumn, yyline, yytext());
+            { printer("|"); return new Symbol(sym.PIPE, yycolumn, yyline, yytext());
             }
             // fall through
           case 66: break;
           case 20:
-            { return new Symbol(sym.RCBRACKET, yycolumn, yyline, yytext());
+            { printer("r_Cbrckt"); return new Symbol(sym.RCBRACKET, yycolumn, yyline, yytext());
             }
             // fall through
           case 67: break;
           case 21:
-            { return new Symbol(sym.NOT, yycolumn, yyline, yytext());
+            { printer("~"); return new Symbol(sym.NOT, yycolumn, yyline, yytext());
             }
             // fall through
           case 68: break;
@@ -924,127 +924,127 @@ System.exit(0);
             // fall through
           case 69: break;
           case 23:
-            { return new Symbol(sym.ASSIGNMENT, yycolumn, yyline, yytext());
+            { printer("->"); return new Symbol(sym.ASSIGNMENT, yycolumn, yyline, yytext());
             }
             // fall through
           case 70: break;
           case 24:
-            { return new Symbol(sym.ID, yycolumn, yyline, yytext());
+            { printer("ID"); return new Symbol(sym.ID, yycolumn, yyline, yytext());
             }
             // fall through
           case 71: break;
           case 25:
-            { return new Symbol(sym.IF, yycolumn, yyline, yytext());
+            { printer("if"); return new Symbol(sym.IF, yycolumn, yyline, yytext());
             }
             // fall through
           case 72: break;
           case 26:
-            { return new Symbol(sym.DEF, yycolumn, yyline, yytext());
+            { printer("def"); return new Symbol(sym.DEF, yycolumn, yyline, yytext());
             }
             // fall through
           case 73: break;
           case 27:
-            { return new Symbol(sym.INT, yycolumn, yyline, yytext());
+            { printer("int"); return new Symbol(sym.INT, yycolumn, yyline, yytext());
             }
             // fall through
           case 74: break;
           case 28:
-            { return new Symbol(sym.CASE, yycolumn, yyline, yytext());
+            { printer("case"); return new Symbol(sym.CASE, yycolumn, yyline, yytext());
             }
             // fall through
           case 75: break;
           case 29:
-            { return new Symbol(sym.CHAR, yycolumn, yyline, yytext());
+            { printer("char"); return new Symbol(sym.CHAR, yycolumn, yyline, yytext());
             }
             // fall through
           case 76: break;
           case 30:
-            { return new Symbol(sym.EACH, yycolumn, yyline, yytext());
+            { printer("each"); return new Symbol(sym.EACH, yycolumn, yyline, yytext());
             }
             // fall through
           case 77: break;
           case 31:
-            { return new Symbol(sym.ELSE, yycolumn, yyline, yytext());
+            { printer("else"); return new Symbol(sym.ELSE, yycolumn, yyline, yytext());
             }
             // fall through
           case 78: break;
           case 32:
-            { return new Symbol(sym.FUNC, yycolumn, yyline, yytext());
+            { printer("func"); return new Symbol(sym.FUNC, yycolumn, yyline, yytext());
             }
             // fall through
           case 79: break;
           case 33:
-            { imprime("init"); return new Symbol(sym.INIT, yycolumn, yyline, yytext());
+            { printer("init"); return new Symbol(sym.INIT, yycolumn, yyline, yytext());
             }
             // fall through
           case 80: break;
           case 34:
-            { return new Symbol(sym.LOOP, yycolumn, yyline, yytext());
+            { printer("loop"); return new Symbol(sym.LOOP, yycolumn, yyline, yytext());
             }
             // fall through
           case 81: break;
           case 35:
-            { return new Symbol(sym.SCAN, yycolumn, yyline, yytext());
+            { printer("scan"); return new Symbol(sym.SCAN, yycolumn, yyline, yytext());
             }
             // fall through
           case 82: break;
           case 36:
-            { return new Symbol(sym.SOUT, yycolumn, yyline, yytext());
+            { printer("sout"); return new Symbol(sym.SOUT, yycolumn, yyline, yytext());
             }
             // fall through
           case 83: break;
           case 37:
-            { return new Symbol(sym.BOOL, yycolumn, yyline, yytext());
+            { printer("bool"); return new Symbol(sym.BOOL, yycolumn, yyline, yytext());
             }
             // fall through
           case 84: break;
           case 38:
-            { return new Symbol(sym.BREAK, yycolumn, yyline, yytext());
+            { printer("break"); return new Symbol(sym.BREAK, yycolumn, yyline, yytext());
             }
             // fall through
           case 85: break;
           case 39:
-            { return new Symbol(sym.ELSIF, yycolumn, yyline, yytext());
+            { printer("elsif"); return new Symbol(sym.ELSIF, yycolumn, yyline, yytext());
             }
             // fall through
           case 86: break;
           case 40:
-            { return new Symbol(sym.FAKER, yycolumn, yyline, yytext());
+            { printer("faker"); return new Symbol(sym.FAKER, yycolumn, yyline, yytext());
             }
             // fall through
           case 87: break;
           case 41:
-            { return new Symbol(sym.WHILE, yycolumn, yyline, yytext());
+            { printer("while"); return new Symbol(sym.WHILE, yycolumn, yyline, yytext());
             }
             // fall through
           case 88: break;
           case 42:
-            { return new Symbol(sym.SOUTLN, yycolumn, yyline, yytext());
+            { printer("soutln"); return new Symbol(sym.SOUTLN, yycolumn, yyline, yytext());
             }
             // fall through
           case 89: break;
           case 43:
-            { return new Symbol(sym.SWITCH, yycolumn, yyline, yytext());
+            { printer("swicth"); return new Symbol(sym.SWITCH, yycolumn, yyline, yytext());
             }
             // fall through
           case 90: break;
           case 44:
-            { return new Symbol(sym.VECTOR, yycolumn, yyline, yytext());
+            { printer("vector"); return new Symbol(sym.VECTOR, yycolumn, yyline, yytext());
             }
             // fall through
           case 91: break;
           case 45:
-            { return new Symbol(sym.DEFAULT, yycolumn, yyline, yytext());
+            { printer("default"); return new Symbol(sym.DEFAULT, yycolumn, yyline, yytext());
             }
             // fall through
           case 92: break;
           case 46:
-            { return new Symbol(sym.NOTHING, yycolumn, yyline, yytext());
+            { printer("nothing"); return new Symbol(sym.NOTHING, yycolumn, yyline, yytext());
             }
             // fall through
           case 93: break;
           case 47:
-            { return new Symbol(sym.PAYBACK, yycolumn, yyline, yytext());
+            { printer("payback");return new Symbol(sym.PAYBACK, yycolumn, yyline, yytext());
             }
             // fall through
           case 94: break;

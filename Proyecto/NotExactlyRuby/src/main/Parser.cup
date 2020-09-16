@@ -28,8 +28,8 @@ parser code
 :}
 
 //Lexemas
-terminal String BOOL, LETTERS, INTEGER, NOTHING;
-terminal String ID;
+terminal   BOOL, LETTERS, INTEGER, NOTHING;
+terminal   ID;
 
 
 //Palabras reservadas, y Operadores
@@ -71,29 +71,44 @@ non terminal vectorData;
 non terminal empty;
 non terminal lista_ID;
 non terminal lista_expresiones;
+non terminal imprimir;
+non terminal scanear;
 
 start with Program;
 
 Program ::= INIT LPAR RPAR LCBRACKET body RCBRACKET;
 declaraciones ::=  DEF  tipo  lista_ID SEMICOLON;
 
-body::= proposition
-        | functions;
+body::= proposition body 
+        | functions body
+        | {::};
 
 proposition ::= WHILE expression LCBRACKET proposition RCBRACKET
         | forLoop
         | ifStatement
-        | ID ASSIGNMENT expression
         | switchCase
         | declaraciones
-        | declaracionSimple;
+        | declaracionSimple
+        | imprimir
+        | scanear
+        | ID ASSIGNMENT expression SEMICOLON;
+
+imprimir ::= SOUT LPAR ID RPAR SEMICOLON
+        | SOUTLN LPAR ID RPAR SEMICOLON
+        | SOUT LPAR values RPAR SEMICOLON 
+        | SOUTLN LPAR values RPAR SEMICOLON;
+
 
 forLoop::= LOOP LSBRACKET proposition RSBRACKET EACH LPAR ID RPAR;
 
 declaracionSimple ::= DEF tipo ID decl_v_e;
 
-functions::= FUNC tipo ID LPAR params RPAR LCBRACKET body RCBRACKET;
+functions::= FUNC tipo ID LPAR params RPAR LCBRACKET body PAYBACK values SEMICOLON RCBRACKET;
 
+params::= tipo ID
+    | ID;
+
+scanear::= SCAN LPAR values RPAR SEMICOLON;
 
 lista_ID ::= ID lista_ID
         | COMMA lista_ID
@@ -126,11 +141,11 @@ values ::= BOOL
 
 //ifNEmp::= IF expression LCBRACKET proposition RCBRACKET;
 
-ifStatement ::= IF expression LCBRACKET proposition RCBRACKET elsiffer;
+ifStatement ::= IF  expression  LCBRACKET proposition RCBRACKET elsiffer;
 
-elsiffer::= ELSIF expression LCBRACKET proposition RCBRACKET elsiffer
+elsiffer::= ELSIF expression  LCBRACKET proposition RCBRACKET elsiffer
         | ELSE LCBRACKET proposition RCBRACKET
-        | empty;
+        | {::};
 
 
 switchCase ::= SWITCH LPAR ID RPAR LCBRACKET cases RCBRACKET;
@@ -151,7 +166,7 @@ termino ::= factor
 
 factor ::= ID
 	| ID LPAR lista_expresiones RPAR
-	| INT
+	| values
 	| LPAR expression RPAR
 	| NOT factor;
 

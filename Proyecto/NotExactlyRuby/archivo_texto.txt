@@ -1,7 +1,13 @@
 init(){ 
-	if(xargos>=echo){
-		data -> 11;
-	}elsif(xargos <= echo){
- 		data -> 10;}
+	def int varx -> 115;
+	while varx> 100 {
+		if(varx===115){
+			sout(varx);
+		}
+	}
+
+	func faker devolucion(int varchar){
+		def int charcount;
+		payback 0;
 	}
 }
