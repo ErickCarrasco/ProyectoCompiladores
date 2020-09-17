@@ -8,6 +8,16 @@ init(){
 
 	func faker devolucion(int varchar){
 		def int charcount;
+
+		loop[
+			sout(datos);
+		]each(varchar)
+
+		if(varchar>10){
+			charcount->charcount+1;
+		}elsif(varchar<10){
+			charcount -> 1;
+		}
 		payback 0;
 	}
 }
