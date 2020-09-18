@@ -1,0 +1,183 @@
+package main;
+
+import java_cup.runtime.*;
+import java.util.*;
+import java.io.FileReader;
+
+parser code
+{:
+         /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+       System.out.println("Error Sintáctico en la columna " + (s.left) +
+        " linea "+s.right+ ". No se esperaba este componente: " +s.value+".");
+       System.out.println("Sintaxis truena");
+    } 
+
+    /**
+     * Método al que se llama automáticamente ante algún error sintáctico 
+     * en el que ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la columna " + 
+        (s.left)+ " linea "+s.right+". Componente " + s.value + 
+        " no reconocido.");
+        System.out.println("Sintaxis nuked"); 
+    } 
+:}
+
+//Lexemas
+terminal   BOOL, LETTERS, INTEGER, NOTHING;
+terminal   ID;
+
+
+//Palabras reservadas, y Operadores
+terminal LPAR, RPAR, LSBRACKET, RSBRACKET, LCBRACKET, RCBRACKET, COLON, ASSIGNMENT, SEMICOLON, COMMA;
+
+terminal OPREL, OPSUMA, OPMULT, OPRES, VECTOR, CASE, IF, WHILE, LOOP, ELSIF, ELSE, FUNC, PIPE;
+
+terminal SCAN, SOUT, SOUTLN, BREAK, DEFAULT, SWITCH, INT, DEF, FAKER, PAYBACK, EACH, INIT, NOT;
+
+terminal CHAR;
+
+//No TERMINALES
+
+non terminal Program;
+non terminal declaraciones;
+non terminal decl_v_e;
+non terminal declaracion_vec;
+non terminal tipo;
+non terminal tipoVS;
+non terminal values;
+non terminal ifStatement;
+non terminal expression;
+non terminal expresion_simple;
+non terminal termino;
+non terminal factor;
+
+non terminal signo;
+non terminal declaracionSimple;
+non terminal functions;
+non terminal params;
+non terminal elsiffer;
+non terminal proposition;
+non terminal asignacion;
+non terminal forLoop;
+non terminal switchCase;
+non terminal cases;
+non terminal body;
+non terminal vectorData;
+non terminal empty;
+non terminal lista_ID;
+non terminal lista_expresiones;
+non terminal imprimir;
+non terminal scanear;
+
+start with Program;
+
+Program ::= INIT LPAR RPAR LCBRACKET body RCBRACKET;
+declaraciones ::=  DEF  tipo  lista_ID SEMICOLON;
+
+body::= proposition body 
+        | functions body
+        | {::};
+
+proposition ::= WHILE expression LCBRACKET proposition RCBRACKET
+        | forLoop
+        | ifStatement
+        | switchCase
+        | declaraciones
+        | declaracionSimple
+        | imprimir
+        | scanear
+        | ID ASSIGNMENT expression SEMICOLON;
+
+imprimir ::= SOUT LPAR ID RPAR SEMICOLON
+        | SOUTLN LPAR ID RPAR SEMICOLON
+        | SOUT LPAR values RPAR SEMICOLON 
+        | SOUTLN LPAR values RPAR SEMICOLON;
+
+
+forLoop::= LOOP LSBRACKET proposition RSBRACKET EACH LPAR ID RPAR;
+
+declaracionSimple ::= DEF tipo ID decl_v_e;
+
+functions::= FUNC tipo ID LPAR params RPAR LCBRACKET body PAYBACK values SEMICOLON RCBRACKET;
+
+params::= tipo ID
+    | ID;
+
+scanear::= SCAN LPAR values RPAR SEMICOLON;
+
+lista_ID ::= ID lista_ID
+        | COMMA lista_ID
+        | empty;
+
+decl_v_e ::= SEMICOLON
+        |   asignacion;
+
+asignacion ::= ASSIGNMENT values SEMICOLON
+        | ASSIGNMENT NOTHING SEMICOLON;
+
+
+tipo ::= 
+        INT |
+        FAKER |
+        CHAR;
+
+tipoVS ::= DEF VECTOR ID ASSIGNMENT vectorData;
+
+vectorData ::= LSBRACKET vectorData RSBRACKET
+        | values COMMA;
+
+values ::= BOOL
+        | LETTERS
+        | INTEGER;
+
+//ifStatement::= ifEmp | ifNEmp;
+
+//ifEmp::= IF expression LCBRACKET proposition RCBRACKET elsiffer;
+
+//ifNEmp::= IF expression LCBRACKET proposition RCBRACKET;
+
+ifStatement ::= IF  expression  LCBRACKET proposition RCBRACKET elsiffer;
+
+elsiffer::= ELSIF expression  LCBRACKET proposition RCBRACKET elsiffer
+        | ELSE LCBRACKET proposition RCBRACKET
+        | {::};
+
+
+switchCase ::= SWITCH LPAR ID RPAR LCBRACKET cases RCBRACKET;
+
+cases::= CASE INTEGER COLON proposition BREAK SEMICOLON cases
+        | CASE LETTERS COLON proposition BREAK SEMICOLON cases
+        | DEFAULT COLON proposition BREAK SEMICOLON;
+
+expression ::= expresion_simple
+	| expresion_simple OPREL expresion_simple;
+
+expresion_simple ::= termino
+	| signo termino
+	| expresion_simple OPSUMA termino;
+
+termino ::= factor
+	| termino OPMULT factor;
+
+factor ::= ID
+	| ID LPAR lista_expresiones RPAR
+	| values
+	| LPAR expression RPAR
+	| NOT factor;
+
+//factor_for ::= ID
+//	| INT
+//	| signo INT;
+
+signo ::= OPSUMA;
+
+lista_expresiones::= expression | lista_expresiones COMMA expression;
+
+     
+
+
