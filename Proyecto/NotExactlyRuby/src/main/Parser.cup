@@ -13,6 +13,7 @@ parser code
 
         public String token_name_from_id(int id){
                 //por medio de SYM.JAVA
+                switch(id){
                 case 0: return "EOF";
                 case 1: return "error";
                 case 2: return "BOOL";
@@ -57,7 +58,8 @@ parser code
                 case 41: return "INIT";
                 case 42: return "NOT";
                 case 43: return "CHAR";
-
+                default: return "N/A";
+                }
         }
 
         public void syntax_error(Symbol s){
@@ -140,46 +142,46 @@ Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket bod
                 parser.count++;
 
                 //Terminal init
-                Nodo initProg = new Node();
-                initp.setEtiqueta("INIT");
-                initp.setID(parser.count);
+                Nodo initProgn = new Nodo();
+                initProgn.setEtiqueta("INIT");
+                initProgn.setID(parser.count);
                 parser.count++;
                 //initp.setValor(id);
 
-                nodo.addHijos(initp);
+                nodo.addHijos(initProgn);
 
                 //Terminal leftPar
-                Nodo leftPar = new Node();
-                leftPar.setEtiqueta("(");
-                leftPar.setID(parser.count);
+                Nodo leftParn = new Nodo();
+                leftParn.setEtiqueta("(");
+                leftParn.setID(parser.count);
                 parser.count++;
 
-                nodo.addHijos(leftPar);
+                nodo.addHijos(leftParn);
 
                 //Terminal rightPar
-                Nodo rightPar = new Node();
-                rightPar.setEtiqueta(")");
-                rightPar.setID(parser.count);
+                Nodo rightParn = new Nodo();
+                rightParn.setEtiqueta(")");
+                rightParn.setID(parser.count);
                 parser.count++;
 
-                nodo.addHijos(rightPar);
+                nodo.addHijos(rightParn);
 
                 //Terminal left C bracket
-                Nodo left_cbracket = new Node();
-                left_cbracket.setEtiqueta("(");
-                left_cbracket.setID(parser.count);
+                Nodo left_cbracketn = new Nodo();
+                left_cbracketn.setEtiqueta("(");
+                left_cbracketn.setID(parser.count);
                 parser.count++;
-                nodo.addHijos(left_cbracket);
+                nodo.addHijos(left_cbracketn);
 
                 //Non terminal body
-                nodo.addHijos((Nodo) mainbody);
+                //nodo.addHijos((Nodo) mainbody);
 
                 //Terminal Right C Bracket
-                Nodo right_cbracket = new Node();
-                right_cbracket.setEtiqueta(")");
-                right_cbracket.setID(parser.count);
+                Nodo right_cbracketn = new Nodo();
+                right_cbracketn.setEtiqueta(")");
+                right_cbracketn.setID(parser.count);
                 parser.count++;
-                nodo.addHijos(right_cbracket);
+                nodo.addHijos(right_cbracketn);
 
                 parser.padre = nodo;
 

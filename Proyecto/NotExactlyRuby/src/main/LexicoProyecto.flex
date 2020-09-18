@@ -6,9 +6,7 @@ import java.io.Reader;
 
 %{
 	public static int erroresLexicos = 0;
-        public void printer(String texto){
-            System.out.println(": "+texto);
-        }
+        
 
 %}
 
@@ -23,10 +21,7 @@ import java.io.Reader;
 %standalone
 %cup
 %char
-%eofval{
-System.out.println("FIN DEL ARCHIVO");
-System.exit(0);
-%eofval}
+
 
 //Contador errores lexicos
 
@@ -85,53 +80,53 @@ hashComment = "#"
 
 <YYINITIAL>{
 	//reserved Words
-	"init"				{printer("init"); return new Symbol(sym.INIT, yycolumn, yyline, yytext());}
-	"int"				{printer("int"); return new Symbol(sym.INT, yycolumn, yyline, yytext());}
-	"faker"				{printer("faker"); return new Symbol(sym.FAKER, yycolumn, yyline, yytext());}
-	"char"				{printer("char"); return new Symbol(sym.CHAR, yycolumn, yyline, yytext());}
-	"vector"			{printer("vector"); return new Symbol(sym.VECTOR, yycolumn, yyline, yytext());}
-	"def"				{printer("def"); return new Symbol(sym.DEF, yycolumn, yyline, yytext());}
-	"if"				{printer("if"); return new Symbol(sym.IF, yycolumn, yyline, yytext());}
-	"elsif"				{printer("elsif"); return new Symbol(sym.ELSIF, yycolumn, yyline, yytext());}
-	"else"				{printer("else"); return new Symbol(sym.ELSE, yycolumn, yyline, yytext());}
-	"loop"				{printer("loop"); return new Symbol(sym.LOOP, yycolumn, yyline, yytext());}
-	"each"				{printer("each"); return new Symbol(sym.EACH, yycolumn, yyline, yytext());}
-	"while"				{printer("while"); return new Symbol(sym.WHILE, yycolumn, yyline, yytext());}
-	"switch"			{printer("swicth"); return new Symbol(sym.SWITCH, yycolumn, yyline, yytext());}
-	"case"				{printer("case"); return new Symbol(sym.CASE, yycolumn, yyline, yytext());}
-	"break"				{printer("break"); return new Symbol(sym.BREAK, yycolumn, yyline, yytext());}
-	"scan"				{printer("scan"); return new Symbol(sym.SCAN, yycolumn, yyline, yytext());}
-	"sout"				{printer("sout"); return new Symbol(sym.SOUT, yycolumn, yyline, yytext());}
-	"soutln"			{printer("soutln"); return new Symbol(sym.SOUTLN, yycolumn, yyline, yytext());}
-	"func"				{printer("func"); return new Symbol(sym.FUNC, yycolumn, yyline, yytext());}
-	"payback"			{printer("payback");return new Symbol(sym.PAYBACK, yycolumn, yyline, yytext());}
-	"nothing"			{printer("nothing"); return new Symbol(sym.NOTHING, yycolumn, yyline, yytext());}
-	"default"			{printer("default"); return new Symbol(sym.DEFAULT, yycolumn, yyline, yytext());}
+	"init"				{ return new Symbol(sym.INIT, yycolumn, yyline, yytext());}
+	"int"				{ return new Symbol(sym.INT, yycolumn, yyline, yytext());}
+	"faker"				{ return new Symbol(sym.FAKER, yycolumn, yyline, yytext());}
+	"char"				{ return new Symbol(sym.CHAR, yycolumn, yyline, yytext());}
+	"vector"			{ return new Symbol(sym.VECTOR, yycolumn, yyline, yytext());}
+	"def"				{ return new Symbol(sym.DEF, yycolumn, yyline, yytext());}
+	"if"				{ return new Symbol(sym.IF, yycolumn, yyline, yytext());}
+	"elsif"				{ return new Symbol(sym.ELSIF, yycolumn, yyline, yytext());}
+	"else"				{ return new Symbol(sym.ELSE, yycolumn, yyline, yytext());}
+	"loop"				{ return new Symbol(sym.LOOP, yycolumn, yyline, yytext());}
+	"each"				{ return new Symbol(sym.EACH, yycolumn, yyline, yytext());}
+	"while"				{ return new Symbol(sym.WHILE, yycolumn, yyline, yytext());}
+	"switch"			{ return new Symbol(sym.SWITCH, yycolumn, yyline, yytext());}
+	"case"				{ return new Symbol(sym.CASE, yycolumn, yyline, yytext());}
+	"break"				{ return new Symbol(sym.BREAK, yycolumn, yyline, yytext());}
+	"scan"				{ return new Symbol(sym.SCAN, yycolumn, yyline, yytext());}
+	"sout"				{ return new Symbol(sym.SOUT, yycolumn, yyline, yytext());}
+	"soutln"			{ return new Symbol(sym.SOUTLN, yycolumn, yyline, yytext());}
+	"func"				{ return new Symbol(sym.FUNC, yycolumn, yyline, yytext());}
+	"payback"			{return new Symbol(sym.PAYBACK, yycolumn, yyline, yytext());}
+	"nothing"			{ return new Symbol(sym.NOTHING, yycolumn, yyline, yytext());}
+	"default"			{ return new Symbol(sym.DEFAULT, yycolumn, yyline, yytext());}
 
 	//vals
-    {not}				{printer("~"); return new Symbol(sym.NOT, yycolumn, yyline, yytext());}
-	{int}				{printer("int"); return new Symbol(sym.INTEGER, yycolumn, yyline, yytext());}
-	{letters}			{printer("letters"); return new Symbol(sym.LETTERS, yycolumn, yyline, yytext());}
-	{bool}				{printer("bool"); return new Symbol(sym.BOOL, yycolumn, yyline, yytext());}
+    {not}				{ return new Symbol(sym.NOT, yycolumn, yyline, yytext());}
+	{int}				{ return new Symbol(sym.INTEGER, yycolumn, yyline, yytext());}
+	{letters}			{ return new Symbol(sym.LETTERS, yycolumn, yyline, yytext());}
+	{bool}				{ return new Symbol(sym.BOOL, yycolumn, yyline, yytext());}
 	//{equals}			{return new Symbol(sym.EQUA, yycolumn, yyline, yytext());}
-	{op_rel}			{printer("op_rel"); return new Symbol(sym.OPREL, yycolumn, yyline, yytext());}
+	{op_rel}			{ return new Symbol(sym.OPREL, yycolumn, yyline, yytext());}
 	//{op_arith}			{return new Symbol(sym.OPARTHM, yycolumn, yyline, yytext());}
 	
-	{op_suma}			{printer("op_suma"); return new Symbol(sym.OPSUMA, yycolumn, yyline, yytext());}
-	{op_mult}			{printer("op_mult"); return new Symbol(sym.OPMULT, yycolumn, yyline, yytext());}
-	{op_res}			{printer("residuo"); return new Symbol(sym.OPRES, yycolumn, yyline, yytext());}
-	{assignment}                    {printer("->"); return new Symbol(sym.ASSIGNMENT, yycolumn, yyline, yytext());}
-	{ID}				{printer("ID"); return new Symbol(sym.ID, yycolumn, yyline, yytext());}
-	{colon}				{printer(":"); return new Symbol(sym.COLON, yycolumn, yyline, yytext());}
-	{semicolon}			{printer(";"); return new Symbol(sym.SEMICOLON, yycolumn, yyline, yytext());}
-	{lpar}				{printer("("); return new Symbol(sym.LPAR, yycolumn, yyline, yytext());}
-	{rpar}				{printer(")"); return new Symbol(sym.RPAR, yycolumn, yyline, yytext());}
-	{left_Sbracket}                 {printer("left_Sbrckt"); return new Symbol(sym.LSBRACKET, yycolumn, yyline, yytext());}
-	{right_Sbracket}                {printer("right_Sbrckt"); return new Symbol(sym.RSBRACKET, yycolumn, yyline, yytext());}
-	{l_Cbracket}                    {printer("l_Cbrckt"); return new Symbol(sym.LCBRACKET, yycolumn, yyline, yytext());}
-	{r_Cbracket}                    {printer("r_Cbrckt"); return new Symbol(sym.RCBRACKET, yycolumn, yyline, yytext());}
-	{comma}				{printer("comma"); return new Symbol(sym.COMMA, yycolumn, yyline, yytext());}
-	{pipe}				{printer("|"); return new Symbol(sym.PIPE, yycolumn, yyline, yytext());}
+	{op_suma}			{ return new Symbol(sym.OPSUMA, yycolumn, yyline, yytext());}
+	{op_mult}			{ return new Symbol(sym.OPMULT, yycolumn, yyline, yytext());}
+	{op_res}			{ return new Symbol(sym.OPRES, yycolumn, yyline, yytext());}
+	{assignment}                    { return new Symbol(sym.ASSIGNMENT, yycolumn, yyline, yytext());}
+	{ID}				{ return new Symbol(sym.ID, yycolumn, yyline, yytext());}
+	{colon}				{ return new Symbol(sym.COLON, yycolumn, yyline, yytext());}
+	{semicolon}			{ return new Symbol(sym.SEMICOLON, yycolumn, yyline, yytext());}
+	{lpar}				{ return new Symbol(sym.LPAR, yycolumn, yyline, yytext());}
+	{rpar}				{ return new Symbol(sym.RPAR, yycolumn, yyline, yytext());}
+	{left_Sbracket}                 { return new Symbol(sym.LSBRACKET, yycolumn, yyline, yytext());}
+	{right_Sbracket}                { return new Symbol(sym.RSBRACKET, yycolumn, yyline, yytext());}
+	{l_Cbracket}                    { return new Symbol(sym.LCBRACKET, yycolumn, yyline, yytext());}
+	{r_Cbracket}                    { return new Symbol(sym.RCBRACKET, yycolumn, yyline, yytext());}
+	{comma}				{ return new Symbol(sym.COMMA, yycolumn, yyline, yytext());}
+	{pipe}				{ return new Symbol(sym.PIPE, yycolumn, yyline, yytext());}
 	{hashComment}		{yybegin(COMMENT_PORTION);}
 	{spaces}			{}
 	.

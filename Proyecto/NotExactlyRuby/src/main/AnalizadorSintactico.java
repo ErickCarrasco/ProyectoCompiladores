@@ -364,25 +364,82 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
 
 
 
-         /**
-     * Método al que se llama automáticamente ante algún error sintactico.
-     **/ 
-    public void syntax_error(Symbol s){ 
-       System.out.println("Error Sintáctico en la Línea " + (s.left) +
-        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+".");
-       System.out.println("Sintaxis truena");
-    } 
+        public int count=1;
+        public static Nodo padre;
+        public static int syntacticErrors = 0;
 
-    /**
-     * Método al que se llama automáticamente ante algún error sintáctico 
-     * en el que ya no es posible una recuperación de errores.
-     **/ 
-    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
-        System.out.println("Error síntactico irrecuperable en la Línea " + 
-        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
-        " no reconocido.");
-        System.out.println("Sintaxis nuked"); 
-    } 
+        public String token_name_from_id(int id){
+                //por medio de SYM.JAVA
+                switch(id){
+                case 0: return "EOF";
+                case 1: return "error";
+                case 2: return "BOOL";
+                case 3: return "LETTERS";
+                case 4: return "INTEGER";
+                case 5: return "NOTHING";
+                case 6: return "ID";
+                case 7: return "LPAR";
+                case 8: return "RPAR";
+                case 9: return "LSBRACKET";
+                case 10: return "RSBRACKET";
+                case 11: return "LCBRACKET";
+                case 12: return "RCBRACKET";
+                case 13: return "COLON";
+                case 14: return "ASSIGNMENT";
+                case 15: return "SEMICOLON";
+                case 16: return "COMMA";
+                case 17: return "OPREL";
+                case 18: return "OPSUMA";
+                case 19: return "OPMULT";
+                case 20: return "OPRES";
+                case 21: return "VECTOR";
+                case 22: return "CASE";
+                case 23: return "IF";
+                case 24: return "WHILE";
+                case 25: return "LOOP";
+                case 26: return "ELSIF";
+                case 27: return "ELSE";
+                case 28: return "FUNC";
+                case 29: return "PIPE";
+                case 30: return "SCAN";
+                case 31: return "SOUT";
+                case 32: return "SOUTLN";
+                case 33: return "BREAK";
+                case 34: return "DEFAULT";
+                case 35: return "SWITCH";
+                case 36: return "INT";
+                case 37: return "DEF";
+                case 38: return "FAKER";
+                case 39: return "PAYBACK";
+                case 40: return "EACH";
+                case 41: return "INIT";
+                case 42: return "NOT";
+                case 43: return "CHAR";
+                default: return "N/A";
+                }
+        }
+
+        public void syntax_error(Symbol s){
+                report_error("Error sintáctico. No se esperaba el siguiente token: <" + s.value + ">. Línea: " + (s.right + 1) + ", Columna: " + (s.left + 1) + 	"\n", null);
+
+                syntacticErrors++;
+
+                List expected = expected_token_ids();
+                if (expected.size() != 0) {
+                        int id;
+                        System.out.println("Se esperaba...");
+                        for (int i = 0; i < expected.size(); i++) {
+            	                id = (int) expected.get(i);
+            	                if (i == expected.size() - 1) {
+            		                System.out.println(token_name_from_id(id));
+            	                } else {
+            		                System.out.print(token_name_from_id(id) + " | ");
+            	                }
+                        }
+                }
+
+        }
+
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
@@ -427,7 +484,76 @@ class CUP$AnalizadorSintactico$actions {
           case 1: // Program ::= INIT LPAR RPAR LCBRACKET body RCBRACKET 
             {
               Object RESULT =null;
+		int initProgleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-5)).left;
+		int initProgright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-5)).right;
+		Object initProg = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-5)).value;
+		int leftParleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).left;
+		int leftParright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).right;
+		Object leftPar = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).value;
+		int rightParleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).left;
+		int rightParright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).right;
+		Object rightPar = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).value;
+		int left_cbracketleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).left;
+		int left_cbracketright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).right;
+		Object left_cbracket = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).value;
+		int mainbodyleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).left;
+		int mainbodyright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
+		Object mainbody = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
+		int right_cbracketleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int right_cbracketright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object right_cbracket = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo nodo = new Nodo();
+                nodo.setEtiqueta("INITIALIZE");
+                nodo.setID(parser.count);
+                parser.count++;
 
+                //Terminal init
+                Nodo initProgn = new Nodo();
+                initProgn.setEtiqueta("INIT");
+                initProgn.setID(parser.count);
+                parser.count++;
+                //initp.setValor(id);
+
+                nodo.addHijos(initProgn);
+
+                //Terminal leftPar
+                Nodo leftParn = new Nodo();
+                leftParn.setEtiqueta("(");
+                leftParn.setID(parser.count);
+                parser.count++;
+
+                nodo.addHijos(leftParn);
+
+                //Terminal rightPar
+                Nodo rightParn = new Nodo();
+                rightParn.setEtiqueta(")");
+                rightParn.setID(parser.count);
+                parser.count++;
+
+                nodo.addHijos(rightParn);
+
+                //Terminal left C bracket
+                Nodo left_cbracketn = new Nodo();
+                left_cbracketn.setEtiqueta("(");
+                left_cbracketn.setID(parser.count);
+                parser.count++;
+                nodo.addHijos(left_cbracketn);
+
+                //Non terminal body
+                //nodo.addHijos((Nodo) mainbody);
+
+                //Terminal Right C Bracket
+                Nodo right_cbracketn = new Nodo();
+                right_cbracketn.setEtiqueta(")");
+                right_cbracketn.setID(parser.count);
+                parser.count++;
+                nodo.addHijos(right_cbracketn);
+
+                parser.padre = nodo;
+
+                RESULT = nodo;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("Program",0, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-5)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
