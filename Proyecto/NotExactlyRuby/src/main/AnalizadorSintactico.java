@@ -609,6 +609,7 @@ class CUP$AnalizadorSintactico$actions {
 		int bodright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		Object bod = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
+                
                 Nodo bodyn = new Nodo();
                 bodyn.setEtiqueta("Body");
                 bodyn.setID(parser.count);
@@ -622,7 +623,10 @@ class CUP$AnalizadorSintactico$actions {
                 //parser.count++;
 
                 bodyn.addHijos((Nodo) prop);
-                bodyn.addHijos((Nodo) bod );
+                if(bod!=null){
+                        bodyn.addHijos(((Nodo) bod).getHijos());
+                }
+                //bodyn.addHijos((Nodo) bod );
 
                 parser.padre = bodyn;
 
@@ -650,6 +654,7 @@ class CUP$AnalizadorSintactico$actions {
               Object RESULT =null;
 		
 
+                /*
                 Nodo bodyn = new Nodo();
                 bodyn.setEtiqueta("Body");
                 bodyn.setID(parser.count);
@@ -665,6 +670,7 @@ class CUP$AnalizadorSintactico$actions {
                 bodyn.addHijos(empty);
                 
                 RESULT = bodyn;
+                */
         
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("body",22, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -737,14 +743,16 @@ class CUP$AnalizadorSintactico$actions {
 		int declSright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		Object declS = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
+               /*
                 Nodo proposition = new Nodo();
-                proposition.setID(parser.count++);
+                proposition.setID(parser.count);
                 proposition.setEtiqueta("propositionDeclSimple");
                 parser.count++;
 
                 proposition.addHijos((Nodo)declS);
                 parser.padre = proposition;
-                RESULT = proposition;
+                */
+                RESULT = declS;
         
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("proposition",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -754,7 +762,22 @@ class CUP$AnalizadorSintactico$actions {
           case 12: // proposition ::= imprimir 
             {
               Object RESULT =null;
+		int printerleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int printerright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object printer = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo printing = new Nodo();
+                printing.setID(parser.count);
+                printing.setEtiqueta("Printer");
+                printing.setValor(":=");
+                parser.count++;
 
+                printing.addHijos((Nodo) printer);
+                parser.padre = printing;
+                RESULT = printing;
+
+
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("proposition",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -781,7 +804,53 @@ class CUP$AnalizadorSintactico$actions {
           case 15: // imprimir ::= SOUT LPAR ID RPAR SEMICOLON 
             {
               Object RESULT =null;
+		int stleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).left;
+		int stright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).right;
+		Object st = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).value;
+		int lPleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).left;
+		int lPright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).right;
+		Object lP = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).value;
+		int idPleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).left;
+		int idPright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).right;
+		Object idP = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).value;
+		int rPleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).left;
+		int rPright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
+		Object rP = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
+		
+                Nodo impresion = new Nodo();
+                impresion.setEtiqueta("Impresion");
+                impresion.setID(parser.count);
+                impresion.setValor("printer");
 
+                parser.count++;
+
+                Nodo souter = new Nodo();
+                souter.setEtiqueta("system out");
+                souter.setID(parser.count);
+                souter.setValor(st.toString());
+
+                impresion.addHijos(souter);
+                parser.count++;
+
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                impresion.addHijos(idData);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+                
+                impresion.addHijos(semicolonN);
+
+                RESULT = impresion;
+
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("imprimir",27, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;

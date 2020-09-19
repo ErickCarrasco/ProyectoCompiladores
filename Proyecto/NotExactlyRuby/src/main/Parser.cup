@@ -219,6 +219,7 @@ declaraciones ::=  DEF  tipo:typeV  lista_ID:lista_IDs SEMICOLON {:
 
 body::= proposition:prop body:bod 
         {:
+                
                 Nodo bodyn = new Nodo();
                 bodyn.setEtiqueta("Body");
                 bodyn.setID(parser.count);
@@ -232,7 +233,10 @@ body::= proposition:prop body:bod
                 //parser.count++;
 
                 bodyn.addHijos((Nodo) prop);
-                bodyn.addHijos((Nodo) bod );
+                if(bod!=null){
+                        bodyn.addHijos(((Nodo) bod).getHijos());
+                }
+                //bodyn.addHijos((Nodo) bod );
 
                 parser.padre = bodyn;
 
@@ -244,6 +248,7 @@ body::= proposition:prop body:bod
         | functions body
         | {:
 
+                /*
                 Nodo bodyn = new Nodo();
                 bodyn.setEtiqueta("Body");
                 bodyn.setID(parser.count);
@@ -259,6 +264,7 @@ body::= proposition:prop body:bod
                 bodyn.addHijos(empty);
                 
                 RESULT = bodyn;
+                */
         :};
 
 proposition ::= WHILE expression LCBRACKET proposition RCBRACKET
@@ -278,20 +284,68 @@ proposition ::= WHILE expression LCBRACKET proposition RCBRACKET
                 
         :}
         | declaracionSimple: declS{:
+               /*
                 Nodo proposition = new Nodo();
-                proposition.setID(parser.count++);
+                proposition.setID(parser.count);
                 proposition.setEtiqueta("propositionDeclSimple");
                 parser.count++;
 
                 proposition.addHijos((Nodo)declS);
                 parser.padre = proposition;
-                RESULT = proposition;
+                */
+                RESULT = declS;
         :}
-        | imprimir
+        | imprimir:printer {:
+                Nodo printing = new Nodo();
+                printing.setID(parser.count);
+                printing.setEtiqueta("Printer");
+                printing.setValor(":=");
+                parser.count++;
+
+                printing.addHijos((Nodo) printer);
+                parser.padre = printing;
+                RESULT = printing;
+
+
+        :}
         | scanear
         | ID ASSIGNMENT expression SEMICOLON;
 
-imprimir ::= SOUT LPAR ID RPAR SEMICOLON
+imprimir ::= SOUT:st LPAR:lP ID:idP RPAR:rP SEMICOLON {:
+                Nodo impresion = new Nodo();
+                impresion.setEtiqueta("Impresion");
+                impresion.setID(parser.count);
+                impresion.setValor("printer");
+
+                parser.count++;
+
+                Nodo souter = new Nodo();
+                souter.setEtiqueta("system out");
+                souter.setID(parser.count);
+                souter.setValor(st.toString());
+
+                impresion.addHijos(souter);
+                parser.count++;
+
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                impresion.addHijos(idData);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+                
+                impresion.addHijos(semicolonN);
+
+                RESULT = impresion;
+
+        :}
         | SOUTLN LPAR ID RPAR SEMICOLON
         | SOUT LPAR values RPAR SEMICOLON 
         | SOUTLN LPAR values RPAR SEMICOLON;

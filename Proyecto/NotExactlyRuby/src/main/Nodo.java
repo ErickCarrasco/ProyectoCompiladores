@@ -6,7 +6,7 @@ public class Nodo {
 	public ArrayList<Nodo> hijos = new ArrayList<>();
 	public String valor;
 	public int id;
-	// public String tipo;
+	
 
 	// etiqueta
 	public void setEtiqueta(String e) {
@@ -18,6 +18,12 @@ public class Nodo {
 	public void addHijos(Nodo n) {
 		hijos.add(n);
 	}
+
+	//Duplication a lo Suazo
+	public void addHijos(ArrayList<Nodo> n) {
+		hijos.addAll(n);
+	}
+
 	public ArrayList<Nodo> getHijos() { return hijos; }
 
 	// valor
