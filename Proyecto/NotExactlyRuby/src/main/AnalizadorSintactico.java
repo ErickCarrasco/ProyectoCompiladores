@@ -510,8 +510,9 @@ class CUP$AnalizadorSintactico$actions {
 
                 //Terminal init
                 Nodo initProgn = new Nodo();
-                initProgn.setEtiqueta("INIT");
+                initProgn.setEtiqueta("INITIAL");
                 initProgn.setID(parser.count);
+                initProgn.setValor(initProg.toString());
                 parser.count++;
                 //initp.setValor(id);
 
@@ -519,34 +520,38 @@ class CUP$AnalizadorSintactico$actions {
 
                 //Terminal leftPar
                 Nodo leftParn = new Nodo();
-                leftParn.setEtiqueta("(");
+                leftParn.setEtiqueta("Left Parenthesis");
                 leftParn.setID(parser.count);
+                leftParn.setValor(leftPar.toString());
                 parser.count++;
 
                 nodo.addHijos(leftParn);
 
                 //Terminal rightPar
                 Nodo rightParn = new Nodo();
-                rightParn.setEtiqueta(")");
+                rightParn.setEtiqueta("Right Parenthesis");
                 rightParn.setID(parser.count);
+                rightParn.setValor(")");
                 parser.count++;
 
                 nodo.addHijos(rightParn);
 
                 //Terminal left C bracket
                 Nodo left_cbracketn = new Nodo();
-                left_cbracketn.setEtiqueta("(");
+                left_cbracketn.setEtiqueta("Left C Bracket");
                 left_cbracketn.setID(parser.count);
+                left_cbracketn.setValor("{");
                 parser.count++;
                 nodo.addHijos(left_cbracketn);
 
                 //Non terminal body
-                //nodo.addHijos((Nodo) mainbody);
+                nodo.addHijos((Nodo) mainbody);
 
                 //Terminal Right C Bracket
                 Nodo right_cbracketn = new Nodo();
-                right_cbracketn.setEtiqueta(")");
+                right_cbracketn.setEtiqueta("Right C Bracket");
                 right_cbracketn.setID(parser.count);
+                right_cbracketn.setValor("}");
                 parser.count++;
                 nodo.addHijos(right_cbracketn);
 
@@ -562,7 +567,33 @@ class CUP$AnalizadorSintactico$actions {
           case 2: // declaraciones ::= DEF tipo lista_ID SEMICOLON 
             {
               Object RESULT =null;
+		int typeVleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).left;
+		int typeVright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).right;
+		Object typeV = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).value;
+		int lista_IDsleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).left;
+		int lista_IDsright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
+		Object lista_IDs = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
+		
+                Nodo declaraciones = new Nodo();
+                declaraciones.setEtiqueta("Declaracion");
+                declaraciones.setID(parser.count);
+                parser.count++;
 
+                declaraciones.addHijos((Nodo) typeV);
+                declaraciones.addHijos((Nodo)lista_IDs);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+
+                declaraciones.addHijos(semicolonN);
+                parser.padre = declaraciones;
+
+                RESULT = declaraciones;
+
+                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("declaraciones",1, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -571,7 +602,35 @@ class CUP$AnalizadorSintactico$actions {
           case 3: // body ::= proposition body 
             {
               Object RESULT =null;
+		int propleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).left;
+		int propright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
+		Object prop = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
+		int bodleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int bodright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object bod = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo bodyn = new Nodo();
+                bodyn.setEtiqueta("Body");
+                bodyn.setID(parser.count);
+                bodyn.setValor("Body constr");
+                parser.count++;
 
+                //Nodo props = new Nodo();
+                //props.setEtiqueta("proposition");
+                //props.setID(parser.count);
+                //props.setValor(prop.toString());
+                //parser.count++;
+
+                bodyn.addHijos((Nodo) prop);
+                bodyn.addHijos((Nodo) bod );
+
+                parser.padre = bodyn;
+
+                RESULT = bodyn;
+                
+
+
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("body",22, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -590,6 +649,23 @@ class CUP$AnalizadorSintactico$actions {
             {
               Object RESULT =null;
 		
+
+                Nodo bodyn = new Nodo();
+                bodyn.setEtiqueta("Body");
+                bodyn.setID(parser.count);
+                bodyn.setValor("Body constr");
+                parser.count++;
+
+                Nodo empty = new Nodo();
+                empty.setEtiqueta("EMPTY");
+                empty.setID(parser.count);
+                empty.setValor("null");
+                parser.count++;
+                
+                bodyn.addHijos(empty);
+                
+                RESULT = bodyn;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("body",22, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -634,7 +710,21 @@ class CUP$AnalizadorSintactico$actions {
           case 10: // proposition ::= declaraciones 
             {
               Object RESULT =null;
+		int declleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int declright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object decl = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo proposition = new Nodo();
+                proposition.setID(parser.count++);
+                proposition.setEtiqueta("propositionDecl");
+                parser.count++;
 
+                proposition.addHijos((Nodo) decl);
+
+                parser.padre = proposition;
+                RESULT = proposition;
+                
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("proposition",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -643,7 +733,19 @@ class CUP$AnalizadorSintactico$actions {
           case 11: // proposition ::= declaracionSimple 
             {
               Object RESULT =null;
+		int declSleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int declSright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object declS = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo proposition = new Nodo();
+                proposition.setID(parser.count++);
+                proposition.setEtiqueta("propositionDeclSimple");
+                parser.count++;
 
+                proposition.addHijos((Nodo)declS);
+                parser.padre = proposition;
+                RESULT = proposition;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("proposition",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -724,7 +826,45 @@ class CUP$AnalizadorSintactico$actions {
           case 20: // declaracionSimple ::= DEF tipo ID decl_v_e 
             {
               Object RESULT =null;
+		int typeleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).left;
+		int typeright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).right;
+		Object type = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).value;
+		int idPleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).left;
+		int idPright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
+		Object idP = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
+		int dvleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int dvright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object dv = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo DeclSimple = new Nodo();
+                DeclSimple.setEtiqueta("Decl Simple");
+                DeclSimple.setID(parser.count);
+                DeclSimple.setValor("Declaracion simple");
+                parser.count++;
 
+                Nodo definer = new Nodo();
+                definer.setEtiqueta("def");
+                definer.setID(parser.count);
+                definer.setValor("DEF");
+                parser.count++;
+
+                DeclSimple.addHijos(definer);
+                DeclSimple.addHijos((Nodo) type);
+                
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                DeclSimple.addHijos(idData);
+                DeclSimple.addHijos((Nodo) dv);
+
+                parser.padre = DeclSimple;
+
+                RESULT = DeclSimple;
+
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("declaracionSimple",13, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -796,7 +936,26 @@ class CUP$AnalizadorSintactico$actions {
           case 28: // decl_v_e ::= SEMICOLON 
             {
               Object RESULT =null;
+		
+                Nodo declV = new Nodo();
+                declV.setEtiqueta("decl Val");
+                declV.setID(parser.count);
+                declV.setValor("D V");
+                parser.count++;
 
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+
+                declV.addHijos( semicolonN );
+
+                parser.padre = declV;
+
+                RESULT = declV;
+                
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("decl_v_e",2, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -805,7 +964,20 @@ class CUP$AnalizadorSintactico$actions {
           case 29: // decl_v_e ::= asignacion 
             {
               Object RESULT =null;
+		int asignleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int asignright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object asign = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo asigner = new Nodo();
+                asigner.setEtiqueta("Asignacion");
+                asigner.setID(parser.count);
+                asigner.setValor("=");
+                parser.count++;
 
+                asigner.addHijos((Nodo) asign);
+
+                RESULT = asigner;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("decl_v_e",2, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -814,7 +986,42 @@ class CUP$AnalizadorSintactico$actions {
           case 30: // asignacion ::= ASSIGNMENT values SEMICOLON 
             {
               Object RESULT =null;
+		int asleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).left;
+		int asright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).right;
+		Object as = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).value;
+		int valsleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).left;
+		int valsright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
+		Object vals = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
+		
+                Nodo asignado = new Nodo();
+                asignado.setEtiqueta("Assignment con value");
+                asignado.setID(parser.count);
+                asignado.setValor("=");
+                parser.count++;
 
+                Nodo asigner = new Nodo();
+                asigner.setEtiqueta("ASSIGNMENT");
+                asigner.setID(parser.count);
+                asigner.setValor(as.toString());
+                parser.count++;
+
+                asignado.addHijos(asigner);
+                asignado.addHijos((Nodo) vals);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+
+                asignado.addHijos(semicolonN);
+                parser.padre = asignado;
+
+                RESULT = asignado;
+
+
+
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("asignacion",18, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -823,7 +1030,46 @@ class CUP$AnalizadorSintactico$actions {
           case 31: // asignacion ::= ASSIGNMENT NOTHING SEMICOLON 
             {
               Object RESULT =null;
+		int asleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).left;
+		int asright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).right;
+		Object as = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).value;
+		int nhleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).left;
+		int nhright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
+		Object nh = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
+		
+                Nodo asignado = new Nodo();
+                asignado.setEtiqueta("Assignment void");
+                asignado.setID(parser.count);
+                asignado.setValor("=");
+                parser.count++;
 
+                Nodo asigner = new Nodo();
+                asigner.setEtiqueta("ASSIGNMENT");
+                asigner.setID(parser.count);
+                asigner.setValor(as.toString());
+                parser.count++;
+
+                asignado.addHijos(asigner);
+
+                Nodo voidV = new Nodo();
+                voidV.setEtiqueta("Void");
+                voidV.setID(parser.count);
+                voidV.setValor(nh.toString());
+                parser.count++;
+
+                asignado.addHijos(voidV);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+
+                asignado.addHijos(semicolonN);
+
+                RESULT = asignado;
+
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("asignacion",18, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -832,7 +1078,15 @@ class CUP$AnalizadorSintactico$actions {
           case 32: // tipo ::= INT 
             {
               Object RESULT =null;
+		
+                Nodo declI = new Nodo();
+                declI.setEtiqueta("Integer");
+                declI.setID(parser.count);
+                declI.setValor("INT");
+                parser.count++;  
 
+                RESULT = declI;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo",4, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -841,7 +1095,15 @@ class CUP$AnalizadorSintactico$actions {
           case 33: // tipo ::= FAKER 
             {
               Object RESULT =null;
+		
+                Nodo declF = new Nodo();
+                declF.setEtiqueta("boolean");
+                declF.setID(parser.count);
+                declF.setValor("FAKER");
+                parser.count++;  
 
+                RESULT = declF;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo",4, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -850,7 +1112,15 @@ class CUP$AnalizadorSintactico$actions {
           case 34: // tipo ::= CHAR 
             {
               Object RESULT =null;
+		
+                Nodo declC = new Nodo();
+                declC.setEtiqueta("character");
+                declC.setID(parser.count);
+                declC.setValor("CHAR");
+                parser.count++;  
 
+                RESULT = declC;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo",4, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -886,7 +1156,18 @@ class CUP$AnalizadorSintactico$actions {
           case 38: // values ::= BOOL 
             {
               Object RESULT =null;
+		int booleanVleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int booleanVright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object booleanV = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo boolFaker = new Nodo();
+                boolFaker.setEtiqueta("val Faker");
+                boolFaker.setID(parser.count);
+                boolFaker.setValor(booleanV.toString());
+                parser.count++;
 
+                RESULT = boolFaker;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("values",6, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -895,7 +1176,18 @@ class CUP$AnalizadorSintactico$actions {
           case 39: // values ::= LETTERS 
             {
               Object RESULT =null;
+		int lChleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int lChright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object lCh = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo letterChar = new Nodo();
+                letterChar.setEtiqueta("val Char");
+                letterChar.setID(parser.count);
+                letterChar.setValor(lCh.toString());
+                parser.count++;
 
+                RESULT = letterChar;
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("values",6, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
@@ -904,7 +1196,19 @@ class CUP$AnalizadorSintactico$actions {
           case 40: // values ::= INTEGER 
             {
               Object RESULT =null;
+		int intVleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int intVright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object intV = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
+		
+                Nodo intVal = new Nodo();
+                intVal.setEtiqueta("int val");
+                intVal.setID(parser.count);
+                intVal.setValor(intV.toString());
+                parser.count++;
 
+                RESULT = intVal;
+
+        
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("values",6, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;

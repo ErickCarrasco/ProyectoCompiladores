@@ -143,8 +143,9 @@ Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket bod
 
                 //Terminal init
                 Nodo initProgn = new Nodo();
-                initProgn.setEtiqueta("INIT");
+                initProgn.setEtiqueta("INITIAL");
                 initProgn.setID(parser.count);
+                initProgn.setValor(initProg.toString());
                 parser.count++;
                 //initp.setValor(id);
 
@@ -152,34 +153,38 @@ Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket bod
 
                 //Terminal leftPar
                 Nodo leftParn = new Nodo();
-                leftParn.setEtiqueta("(");
+                leftParn.setEtiqueta("Left Parenthesis");
                 leftParn.setID(parser.count);
+                leftParn.setValor(leftPar.toString());
                 parser.count++;
 
                 nodo.addHijos(leftParn);
 
                 //Terminal rightPar
                 Nodo rightParn = new Nodo();
-                rightParn.setEtiqueta(")");
+                rightParn.setEtiqueta("Right Parenthesis");
                 rightParn.setID(parser.count);
+                rightParn.setValor(")");
                 parser.count++;
 
                 nodo.addHijos(rightParn);
 
                 //Terminal left C bracket
                 Nodo left_cbracketn = new Nodo();
-                left_cbracketn.setEtiqueta("(");
+                left_cbracketn.setEtiqueta("Left C Bracket");
                 left_cbracketn.setID(parser.count);
+                left_cbracketn.setValor("{");
                 parser.count++;
                 nodo.addHijos(left_cbracketn);
 
                 //Non terminal body
-                //nodo.addHijos((Nodo) mainbody);
+                nodo.addHijos((Nodo) mainbody);
 
                 //Terminal Right C Bracket
                 Nodo right_cbracketn = new Nodo();
-                right_cbracketn.setEtiqueta(")");
+                right_cbracketn.setEtiqueta("Right C Bracket");
                 right_cbracketn.setID(parser.count);
+                right_cbracketn.setValor("}");
                 parser.count++;
                 nodo.addHijos(right_cbracketn);
 
@@ -190,18 +195,98 @@ Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket bod
         ;
 
 
-declaraciones ::=  DEF  tipo  lista_ID SEMICOLON;
+declaraciones ::=  DEF  tipo:typeV  lista_ID:lista_IDs SEMICOLON {:
+                Nodo declaraciones = new Nodo();
+                declaraciones.setEtiqueta("Declaracion");
+                declaraciones.setID(parser.count);
+                parser.count++;
 
-body::= proposition body 
+                declaraciones.addHijos((Nodo) typeV);
+                declaraciones.addHijos((Nodo)lista_IDs);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+
+                declaraciones.addHijos(semicolonN);
+                parser.padre = declaraciones;
+
+                RESULT = declaraciones;
+
+                :};
+
+body::= proposition:prop body:bod 
+        {:
+                Nodo bodyn = new Nodo();
+                bodyn.setEtiqueta("Body");
+                bodyn.setID(parser.count);
+                bodyn.setValor("Body constr");
+                parser.count++;
+
+                //Nodo props = new Nodo();
+                //props.setEtiqueta("proposition");
+                //props.setID(parser.count);
+                //props.setValor(prop.toString());
+                //parser.count++;
+
+                bodyn.addHijos((Nodo) prop);
+                bodyn.addHijos((Nodo) bod );
+
+                parser.padre = bodyn;
+
+                RESULT = bodyn;
+                
+
+
+        :}
         | functions body
-        | {::};
+        | {:
+
+                Nodo bodyn = new Nodo();
+                bodyn.setEtiqueta("Body");
+                bodyn.setID(parser.count);
+                bodyn.setValor("Body constr");
+                parser.count++;
+
+                Nodo empty = new Nodo();
+                empty.setEtiqueta("EMPTY");
+                empty.setID(parser.count);
+                empty.setValor("null");
+                parser.count++;
+                
+                bodyn.addHijos(empty);
+                
+                RESULT = bodyn;
+        :};
 
 proposition ::= WHILE expression LCBRACKET proposition RCBRACKET
         | forLoop
         | ifStatement
         | switchCase
-        | declaraciones
-        | declaracionSimple
+        | declaraciones:decl{:
+                Nodo proposition = new Nodo();
+                proposition.setID(parser.count++);
+                proposition.setEtiqueta("propositionDecl");
+                parser.count++;
+
+                proposition.addHijos((Nodo) decl);
+
+                parser.padre = proposition;
+                RESULT = proposition;
+                
+        :}
+        | declaracionSimple: declS{:
+                Nodo proposition = new Nodo();
+                proposition.setID(parser.count++);
+                proposition.setEtiqueta("propositionDeclSimple");
+                parser.count++;
+
+                proposition.addHijos((Nodo)declS);
+                parser.padre = proposition;
+                RESULT = proposition;
+        :}
         | imprimir
         | scanear
         | ID ASSIGNMENT expression SEMICOLON;
@@ -214,7 +299,37 @@ imprimir ::= SOUT LPAR ID RPAR SEMICOLON
 
 forLoop::= LOOP LSBRACKET proposition RSBRACKET EACH LPAR ID RPAR;
 
-declaracionSimple ::= DEF tipo ID decl_v_e;
+declaracionSimple ::= DEF tipo:type ID:idP decl_v_e:dv {:
+                Nodo DeclSimple = new Nodo();
+                DeclSimple.setEtiqueta("Decl Simple");
+                DeclSimple.setID(parser.count);
+                DeclSimple.setValor("Declaracion simple");
+                parser.count++;
+
+                Nodo definer = new Nodo();
+                definer.setEtiqueta("def");
+                definer.setID(parser.count);
+                definer.setValor("DEF");
+                parser.count++;
+
+                DeclSimple.addHijos(definer);
+                DeclSimple.addHijos((Nodo) type);
+                
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                DeclSimple.addHijos(idData);
+                DeclSimple.addHijos((Nodo) dv);
+
+                parser.padre = DeclSimple;
+
+                RESULT = DeclSimple;
+
+        :}
+;
 
 functions::= FUNC tipo ID LPAR params RPAR LCBRACKET body PAYBACK values SEMICOLON RCBRACKET;
 
@@ -227,26 +342,167 @@ lista_ID ::= ID lista_ID
         | COMMA lista_ID
         | empty;
 
-decl_v_e ::= SEMICOLON
-        |   asignacion;
+decl_v_e ::= SEMICOLON {:
+                Nodo declV = new Nodo();
+                declV.setEtiqueta("decl Val");
+                declV.setID(parser.count);
+                declV.setValor("D V");
+                parser.count++;
 
-asignacion ::= ASSIGNMENT values SEMICOLON
-        | ASSIGNMENT NOTHING SEMICOLON;
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+
+                declV.addHijos( semicolonN );
+
+                parser.padre = declV;
+
+                RESULT = declV;
+                
+        :}
+        |   asignacion:asign {:
+                Nodo asigner = new Nodo();
+                asigner.setEtiqueta("Asignacion");
+                asigner.setID(parser.count);
+                asigner.setValor("=");
+                parser.count++;
+
+                asigner.addHijos((Nodo) asign);
+
+                RESULT = asigner;
+        :};
+
+asignacion ::= ASSIGNMENT:as values:vals SEMICOLON{:
+                Nodo asignado = new Nodo();
+                asignado.setEtiqueta("Assignment con value");
+                asignado.setID(parser.count);
+                asignado.setValor("=");
+                parser.count++;
+
+                Nodo asigner = new Nodo();
+                asigner.setEtiqueta("ASSIGNMENT");
+                asigner.setID(parser.count);
+                asigner.setValor(as.toString());
+                parser.count++;
+
+                asignado.addHijos(asigner);
+                asignado.addHijos((Nodo) vals);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+
+                asignado.addHijos(semicolonN);
+                parser.padre = asignado;
+
+                RESULT = asignado;
+
+
+
+        :}
+        | ASSIGNMENT:as NOTHING:nh SEMICOLON {:
+                Nodo asignado = new Nodo();
+                asignado.setEtiqueta("Assignment void");
+                asignado.setID(parser.count);
+                asignado.setValor("=");
+                parser.count++;
+
+                Nodo asigner = new Nodo();
+                asigner.setEtiqueta("ASSIGNMENT");
+                asigner.setID(parser.count);
+                asigner.setValor(as.toString());
+                parser.count++;
+
+                asignado.addHijos(asigner);
+
+                Nodo voidV = new Nodo();
+                voidV.setEtiqueta("Void");
+                voidV.setID(parser.count);
+                voidV.setValor(nh.toString());
+                parser.count++;
+
+                asignado.addHijos(voidV);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+
+                asignado.addHijos(semicolonN);
+
+                RESULT = asignado;
+
+        :};
 
 
 tipo ::= 
-        INT |
-        FAKER |
-        CHAR;
+        INT {:
+                Nodo declI = new Nodo();
+                declI.setEtiqueta("Integer");
+                declI.setID(parser.count);
+                declI.setValor("INT");
+                parser.count++;  
+
+                RESULT = declI;
+        :}|
+        FAKER {:
+                Nodo declF = new Nodo();
+                declF.setEtiqueta("boolean");
+                declF.setID(parser.count);
+                declF.setValor("FAKER");
+                parser.count++;  
+
+                RESULT = declF;
+        :}|
+        CHAR{:
+                Nodo declC = new Nodo();
+                declC.setEtiqueta("character");
+                declC.setID(parser.count);
+                declC.setValor("CHAR");
+                parser.count++;  
+
+                RESULT = declC;
+        :};
 
 tipoVS ::= DEF VECTOR ID ASSIGNMENT vectorData;
 
 vectorData ::= LSBRACKET vectorData RSBRACKET
         | values COMMA;
 
-values ::= BOOL
-        | LETTERS
-        | INTEGER;
+values ::= BOOL:booleanV {:
+                Nodo boolFaker = new Nodo();
+                boolFaker.setEtiqueta("val Faker");
+                boolFaker.setID(parser.count);
+                boolFaker.setValor(booleanV.toString());
+                parser.count++;
+
+                RESULT = boolFaker;
+        :}
+        | LETTERS:lCh {:
+                Nodo letterChar = new Nodo();
+                letterChar.setEtiqueta("val Char");
+                letterChar.setID(parser.count);
+                letterChar.setValor(lCh.toString());
+                parser.count++;
+
+                RESULT = letterChar;
+        :}
+        | INTEGER:intV {:
+                Nodo intVal = new Nodo();
+                intVal.setEtiqueta("int val");
+                intVal.setID(parser.count);
+                intVal.setValor(intV.toString());
+                parser.count++;
+
+                RESULT = intVal;
+
+        :}
+        ;
 
 //ifStatement::= ifEmp | ifNEmp;
 

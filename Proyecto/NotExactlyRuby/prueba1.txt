@@ -1,3 +1,5 @@
 init(){
-	def int xars->10;
+	def int varx;
+	def int vary -> nothing;
+	def faker validador -> false;
 }
