@@ -152,41 +152,41 @@ Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket bod
                 nodo.addHijos(initProgn);
 
                 //Terminal leftPar
-                Nodo leftParn = new Nodo();
-                leftParn.setEtiqueta("Left Parenthesis");
-                leftParn.setID(parser.count);
-                leftParn.setValor(leftPar.toString());
-                parser.count++;
+               // Nodo leftParn = new Nodo();
+                //leftParn.setEtiqueta("Left Parenthesis");
+                //leftParn.setID(parser.count);
+                //leftParn.setValor(leftPar.toString());
+                //parser.count++;
 
-                nodo.addHijos(leftParn);
+                //nodo.addHijos(leftParn);
 
                 //Terminal rightPar
-                Nodo rightParn = new Nodo();
-                rightParn.setEtiqueta("Right Parenthesis");
-                rightParn.setID(parser.count);
-                rightParn.setValor(")");
-                parser.count++;
+                //Nodo rightParn = new Nodo();
+                //rightParn.setEtiqueta("Right Parenthesis");
+                //rightParn.setID(parser.count);
+                //rightParn.setValor(")");
+                //parser.count++;
 
-                nodo.addHijos(rightParn);
+                //nodo.addHijos(rightParn);
 
                 //Terminal left C bracket
-                Nodo left_cbracketn = new Nodo();
-                left_cbracketn.setEtiqueta("Left C Bracket");
-                left_cbracketn.setID(parser.count);
-                left_cbracketn.setValor("{");
-                parser.count++;
-                nodo.addHijos(left_cbracketn);
+                //Nodo left_cbracketn = new Nodo();
+                //left_cbracketn.setEtiqueta("Left C Bracket");
+                //left_cbracketn.setID(parser.count);
+                //left_cbracketn.setValor("{");
+                //parser.count++;
+                //nodo.addHijos(left_cbracketn);
 
                 //Non terminal body
                 nodo.addHijos((Nodo) mainbody);
 
                 //Terminal Right C Bracket
-                Nodo right_cbracketn = new Nodo();
-                right_cbracketn.setEtiqueta("Right C Bracket");
-                right_cbracketn.setID(parser.count);
-                right_cbracketn.setValor("}");
-                parser.count++;
-                nodo.addHijos(right_cbracketn);
+                //Nodo right_cbracketn = new Nodo();
+                //right_cbracketn.setEtiqueta("Right C Bracket");
+                //right_cbracketn.setID(parser.count);
+                //right_cbracketn.setValor("}");
+                //parser.count++;
+                //nodo.addHijos(right_cbracketn);
 
                 parser.padre = nodo;
 
@@ -211,7 +211,7 @@ declaraciones ::=  DEF  tipo:typeV  lista_ID:lista_IDs SEMICOLON {:
                 parser.count++;
 
                 declaraciones.addHijos(semicolonN);
-                parser.padre = declaraciones;
+                //parser.padre = declaraciones;
 
                 RESULT = declaraciones;
 
@@ -238,7 +238,7 @@ body::= proposition:prop body:bod
                 }
                 //bodyn.addHijos((Nodo) bod );
 
-                parser.padre = bodyn;
+                //parser.padre = bodyn;
 
                 RESULT = bodyn;
                 
@@ -268,19 +268,25 @@ body::= proposition:prop body:bod
         :};
 
 proposition ::= WHILE expression LCBRACKET proposition RCBRACKET
-        | forLoop
-        | ifStatement
-        | switchCase
+        | forLoop:forl{:
+                RESULT = forl;
+        :}
+        | ifStatement:ifS{:
+                RESULT = ifS;
+        :}
+        | switchCase:sc{:
+                RESULT = sc;
+        :}
         | declaraciones:decl{:
-                Nodo proposition = new Nodo();
-                proposition.setID(parser.count++);
-                proposition.setEtiqueta("propositionDecl");
-                parser.count++;
+                //Nodo proposition = new Nodo();
+                //proposition.setID(parser.count++);
+                //proposition.setEtiqueta("propositionDecl");
+                //parser.count++;
 
-                proposition.addHijos((Nodo) decl);
+                //proposition.addHijos((Nodo) decl);
 
-                parser.padre = proposition;
-                RESULT = proposition;
+                //parser.padre = proposition;
+                RESULT = decl;
                 
         :}
         | declaracionSimple: declS{:
@@ -296,20 +302,41 @@ proposition ::= WHILE expression LCBRACKET proposition RCBRACKET
                 RESULT = declS;
         :}
         | imprimir:printer {:
-                Nodo printing = new Nodo();
-                printing.setID(parser.count);
-                printing.setEtiqueta("Printer");
-                printing.setValor(":=");
-                parser.count++;
+                //Nodo printing = new Nodo();
+                //printing.setID(parser.count);
+                //printing.setEtiqueta("Printer");
+                //printing.setValor(":=");
+                //parser.count++;
 
-                printing.addHijos((Nodo) printer);
-                parser.padre = printing;
-                RESULT = printing;
+                //printing.addHijos((Nodo) printer);
+                //parser.padre = printing;
+                RESULT = printer;
 
 
         :}
-        | scanear
-        | ID ASSIGNMENT expression SEMICOLON;
+        | scanear:scan{:
+                RESULT = scan;
+        :}
+        | ID:idP ASSIGNMENT:as expression:ex SEMICOLON {:
+                Nodo asignacionID = new Nodo();
+                asignacionID.setEtiqueta("asignacion a valor");
+                asignacionID.setID(parser.count);
+                parser.count++;
+
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                asignacionID.addHijos(idData);
+
+                asignacionID.addHijos((Nodo) ex);
+
+                RESULT = asignacionID;
+
+        
+        :};
 
 imprimir ::= SOUT:st LPAR:lP ID:idP RPAR:rP SEMICOLON {:
                 Nodo impresion = new Nodo();
@@ -346,12 +373,107 @@ imprimir ::= SOUT:st LPAR:lP ID:idP RPAR:rP SEMICOLON {:
                 RESULT = impresion;
 
         :}
-        | SOUTLN LPAR ID RPAR SEMICOLON
-        | SOUT LPAR values RPAR SEMICOLON 
-        | SOUTLN LPAR values RPAR SEMICOLON;
+        | SOUTLN:stl LPAR ID:idP RPAR SEMICOLON {:
+                Nodo impresion = new Nodo();
+                impresion.setEtiqueta("Impresion con Salto de linea");
+                impresion.setID(parser.count);
+                impresion.setValor("printerLN");
+
+                parser.count++;
+
+                Nodo souter = new Nodo();
+                souter.setEtiqueta("system out ln");
+                souter.setID(parser.count);
+                souter.setValor(stl.toString());
+
+                impresion.addHijos(souter);
+                parser.count++;
+
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                impresion.addHijos(idData);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+                
+                impresion.addHijos(semicolonN);
+
+                RESULT = impresion;
+
+        
+        :}
+        | SOUT:st LPAR values:vals RPAR SEMICOLON {:
+
+                Nodo impresion = new Nodo();
+                impresion.setEtiqueta("Impresion");
+                impresion.setID(parser.count);
+                impresion.setValor("printer");
+
+                parser.count++;
+
+                Nodo souter = new Nodo();
+                souter.setEtiqueta("system out");
+                souter.setID(parser.count);
+                souter.setValor(st.toString());
+
+                impresion.addHijos(souter);
+                parser.count++;
+
+                impresion.addHijos((Nodo) vals);
+
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+                
+                impresion.addHijos(semicolonN);
+
+                RESULT = impresion;
+        
+        :}
+        | SOUTLN:stl LPAR values:vals RPAR SEMICOLON{:
+                Nodo impresion = new Nodo();
+                impresion.setEtiqueta("Impresion con Salto de linea");
+                impresion.setID(parser.count);
+                impresion.setValor("printerLN");
+
+                parser.count++;
+
+                Nodo souter = new Nodo();
+                souter.setEtiqueta("system out ln");
+                souter.setID(parser.count);
+                souter.setValor(stl.toString());
+
+                impresion.addHijos(souter);
+                parser.count++;
+
+                impresion.addHijos((Nodo) vals);
 
 
-forLoop::= LOOP LSBRACKET proposition RSBRACKET EACH LPAR ID RPAR;
+                Nodo semicolonN = new Nodo();
+                semicolonN.setEtiqueta("semicolon");
+                semicolonN.setID(parser.count);
+                semicolonN.setValor(";");
+                parser.count++;
+                
+                impresion.addHijos(semicolonN);
+
+                RESULT = impresion;
+        
+        :};
+
+
+forLoop::= LOOP:looper LSBRACKET proposition:prop RSBRACKET EACH:eachW LPAR ID:idP RPAR{:
+
+:};
 
 declaracionSimple ::= DEF tipo:type ID:idP decl_v_e:dv {:
                 Nodo DeclSimple = new Nodo();
@@ -378,7 +500,7 @@ declaracionSimple ::= DEF tipo:type ID:idP decl_v_e:dv {:
                 DeclSimple.addHijos(idData);
                 DeclSimple.addHijos((Nodo) dv);
 
-                parser.padre = DeclSimple;
+                //parser.padre = DeclSimple;
 
                 RESULT = DeclSimple;
 
@@ -390,9 +512,40 @@ functions::= FUNC tipo ID LPAR params RPAR LCBRACKET body PAYBACK values SEMICOL
 params::= tipo ID
     | ID;
 
-scanear::= SCAN LPAR values RPAR SEMICOLON;
+scanear::= ID:idP ASSIGNMENT SCAN:scanP LPAR tipo:typeV RPAR SEMICOLON{:
+                Nodo scanear = new Nodo();
+                scanear.setEtiqueta("Scanner");
+                scanear.setID(parser.count);
+                scanear.setValor("");
 
-lista_ID ::= ID lista_ID
+                parser.count++;
+
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                scanear.addHijos(idData);
+
+                Nodo scanerW = new Nodo();
+                scanerW.setEtiqueta("scaner");
+                scanerW.setID(parser.count);
+                scanerW.setValor(scanP.toString());
+                parser.count++;
+
+                scanear.addHijos(scanerW);
+
+                scanear.addHijos((Nodo)typeV);
+
+                RESULT = scanear;
+                
+
+:};
+
+lista_ID ::= ID lista_ID{:
+
+        :}
         | COMMA lista_ID
         | empty;
 
@@ -411,7 +564,7 @@ decl_v_e ::= SEMICOLON {:
 
                 declV.addHijos( semicolonN );
 
-                parser.padre = declV;
+                //parser.padre = declV;
 
                 RESULT = declV;
                 
@@ -451,7 +604,7 @@ asignacion ::= ASSIGNMENT:as values:vals SEMICOLON{:
                 parser.count++;
 
                 asignado.addHijos(semicolonN);
-                parser.padre = asignado;
+                //parser.padre = asignado;
 
                 RESULT = asignado;
 
@@ -564,10 +717,56 @@ values ::= BOOL:booleanV {:
 
 //ifNEmp::= IF expression LCBRACKET proposition RCBRACKET;
 
-ifStatement ::= IF  expression  LCBRACKET proposition RCBRACKET elsiffer;
+ifStatement ::= IF:iferW  expression:ex  LCBRACKET proposition:prop RCBRACKET elsiffer:elsif{:
+                Nodo ifState = new Nodo();
+                ifState.setID(parser.count);
+                ifState.setEtiqueta("if State");
+                parser.count++;
 
-elsiffer::= ELSIF expression  LCBRACKET proposition RCBRACKET elsiffer
-        | ELSE LCBRACKET proposition RCBRACKET
+                Nodo ifer = new Nodo();
+                ifer.setID(parser.count);
+                ifer.setEtiqueta("if w");
+                ifer.setValor(iferW.toString());
+                parser.count++;
+
+                ifState.addHijos(ifer);
+                ifState.addHijos((Nodo) ex);
+                ifState.addHijos((Nodo) prop);
+                ifState.addHijos((Nodo) elsif);
+
+                RESULT = ifState;
+
+:};
+
+elsiffer::= ELSIF:elsifer expression:ex  LCBRACKET proposition:prop RCBRACKET elsiffer:elseR{:
+                Nodo elsifCase = new Nodo();
+                elsifCase.setEtiqueta("Else if");
+                elsifCase.setID(parser.count);
+                elsifCase.setValor(elsifer.toString());
+                parser.count++;
+
+                elsifCase.addHijos((Nodo) ex);
+                elsifCase.addHijos((Nodo) prop);
+
+                //if(elseR!=null){
+                //        elsifCase.addHijos(((Nodo) elseR).getHijos());
+                //}
+                elsifCase.addHijos((Nodo) elseR);
+                RESULT = elsifCase;
+
+        :}
+        | ELSE LCBRACKET proposition:prop RCBRACKET{:
+                Nodo elseFinal = new Nodo();
+                elseFinal.setEtiqueta("Else final");
+                elseFinal.setID(parser.count);
+                elseFinal.setValor("ELSE");
+                parser.count++;
+
+                elseFinal.addHijos((Nodo) prop);
+
+                RESULT = elseFinal;
+
+        :}
         | {::};
 
 
@@ -577,29 +776,138 @@ cases::= CASE INTEGER COLON proposition BREAK SEMICOLON cases
         | CASE LETTERS COLON proposition BREAK SEMICOLON cases
         | DEFAULT COLON proposition BREAK SEMICOLON;
 
-expression ::= expresion_simple
-	| expresion_simple OPREL expresion_simple;
+expression ::= expresion_simple:exS{:
+                RESULT = exS;
+        :}
+	| expresion_simple:exSL OPREL:opr expresion_simple:exSR{:
+                Nodo exprOprel = new Nodo ();
+                exprOprel.setEtiqueta("Expr con oprel");
+                exprOprel.setID(parser.count);
+                parser.count++;
 
-expresion_simple ::= termino
-	| signo termino
-	| expresion_simple OPSUMA termino;
+                exprOprel.addHijos((Nodo) exSL);
 
-termino ::= factor
-	| termino OPMULT factor;
+                Nodo oprelN = new Nodo();
+                oprelN.setEtiqueta("op relacional");
+                oprelN.setID(parser.count);
+                oprelN.setValor(opr.toString());
 
-factor ::= ID
-	| ID LPAR lista_expresiones RPAR
-	| values
-	| LPAR expression RPAR
-	| NOT factor;
+                parser.count++;
+
+                exprOprel.addHijos((Nodo) exSR);
+
+                RESULT = exprOprel;
+        :};
+
+expresion_simple ::= termino:term{:
+                RESULT = term;
+        :}
+	| signo:sig termino:term{:
+                Nodo signTERM = new Nodo();
+                signTERM.setID(parser.count);
+                signTERM.setEtiqueta("termino con signo");
+                parser.count++;
+                
+                signTERM.addHijos((Nodo) sig);
+                signTERM.addHijos((Nodo) term);
+
+                RESULT = signTERM;
+        :}
+	| expresion_simple:exS  OPSUMA:opS termino:term {:
+                Nodo exTERM = new Nodo();
+                exTERM.setID(parser.count);
+                exTERM.setEtiqueta("expr suma termino");
+                parser.count++;
+
+                exTERM.addHijos((Nodo) exS);
+                Nodo simbolo = new Nodo();
+                simbolo.setID(parser.count);
+                simbolo.setEtiqueta("Operador de suma");
+                simbolo.setValor(opS.toString());
+                exTERM.addHijos((Nodo) term);
+
+                RESULT = exTERM;
+
+        :};
+
+termino ::= factor:factorX {:
+                RESULT = factorX;
+        :}
+	| termino:term OPMULT:opM factor:fac{:
+                Nodo termFactor = new Nodo();
+                termFactor.setID(parser.count);
+                termFactor.setEtiqueta("Termino con factor");
+                parser.count++;
+
+                termFactor.addHijos((Nodo) term);
+                Nodo simbolo = new Nodo();
+                simbolo.setID(parser.count);
+                simbolo.setEtiqueta("Operador de Mult");
+                simbolo.setValor(opM.toString());
+                parser.count++;
+
+                termFactor.addHijos((Nodo) fac);
+
+                RESULT = termFactor;
+                
+        :};
+
+factor ::= ID:idP{:
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                RESULT = idData;
+        :}
+	| ID LPAR lista_expresiones RPAR {:
+
+        :}
+	| values:vals{:
+                RESULT = vals;
+        :}
+	| LPAR expression:ex RPAR{:
+                RESULT = ex;
+        :}
+	| NOT:nt factor:fac{:
+                Nodo notF = new Nodo();
+                notF.setEtiqueta("Not factor");
+                notF.setID(parser.count);
+                parser.count++;
+
+                Nodo notW = new Nodo();
+                notW.setEtiqueta("Not");
+                notW.setID(parser.count);
+                notW.setValor(nt.toString());
+                parser.count++;
+
+                notF.addHijos(notW);
+                notF.addHijos((Nodo)fac);
+
+                RESULT = notF;
+
+        :};
 
 //factor_for ::= ID
 //	| INT
 //	| signo INT;
 
-signo ::= OPSUMA;
+signo ::= OPSUMA:opSum{:
+        Nodo operador = new Nodo();
+        operador.setEtiqueta("opSuma");
+        operador.setID(parser.count);
+        operador.setValor(opSum.toString());
+        parser.count++;
 
-lista_expresiones::= expression | lista_expresiones COMMA expression;
+        RESULT = operador;
+:};
+
+lista_expresiones::= expression:ex {:
+                RESULT = ex;
+:} | lista_expresiones COMMA expression{:
+
+:};
 
      
 

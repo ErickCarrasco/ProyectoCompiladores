@@ -2,4 +2,14 @@ init(){
 	def int varx;
 	def int vary -> nothing;
 	def faker validador -> false;
+
+	if(validador){
+		def int act->12;
+	}elsif(~validador){
+		sout(vary);
+	}elsif(varx ~= vary){
+		sout(varx);
+	}else{
+		sout(nada);
+	}
 }
