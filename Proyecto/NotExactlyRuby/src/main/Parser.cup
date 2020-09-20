@@ -268,7 +268,17 @@ body::= proposition:prop body:bod
                 */
         :};
 
-proposition ::= WHILE expression LCBRACKET proposition RCBRACKET
+proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
+                Nodo whileN = new Nodo();
+                whileN.setEtiqueta("While");
+                whileN.setID(parser.count);
+                parser.count++;
+
+                whileN.addHijos((Nodo) ex);
+                whileN.addHijos((Nodo) bod);
+
+                RESULT = whileN;
+        :}
         |funcCall
         | forLoop:forl{:
                 RESULT = forl;
@@ -475,7 +485,35 @@ imprimir ::= SOUT:st LPAR:lP ID:idP RPAR:rP SEMICOLON {:
         :};
 
 
-forLoop::= LOOP:looper LSBRACKET proposition:prop RSBRACKET EACH:eachW LPAR ID:idP RPAR{:
+forLoop::= LOOP:looper LSBRACKET body:props RSBRACKET EACH:eachW LPAR ID:idP RPAR{:
+
+                Nodo loopN = new Nodo();
+                loopN.setEtiqueta("For loop");
+                loopN.setID(parser.count);
+                loopN.setValor(looper.toString());
+                parser.count++;
+
+                loopN.addHijos((Nodo)props);
+
+                Nodo eachP = new Nodo();
+                eachP.setEtiqueta("Each id");
+                eachP.setID(parser.count);
+                eachP.setValor(eachW.toString());
+
+                parser.count++;
+
+                loopN.addHijos(eachP);
+
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                loopN.addHijos(idData);
+
+                RESULT = loopN;
+
 
 :};
 
@@ -513,8 +551,67 @@ declaracionSimple ::= DEF tipo:type ID:idP decl_v_e:dv {:
 
 functions::= FUNC tipo ID LPAR params RPAR LCBRACKET body PAYBACK values SEMICOLON RCBRACKET;
 
-params::= tipo ID
-    | ID;
+params::= tipo:type  ID:idP params:pL {:
+                 Nodo paramsN = new Nodo();
+                paramsN.setID(parser.count);
+                paramsN.setEtiqueta("Parametros");
+                paramsN.setValor(" ");
+
+                parser.count++;
+                paramsN.addHijos((Nodo) type);
+
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                paramsN.addHijos(idData);
+
+                if(pL!=null){
+                        paramsN.addHijos(((Nodo) pL).getHijos());
+                }
+
+                RESULT = paramsN;
+        :}
+    | ID:idP params:pL{:
+                Nodo paramsN = new Nodo();
+                paramsN.setID(parser.count);
+                paramsN.setEtiqueta("Parametros");
+                paramsN.setValor(" ");
+                parser.count++;
+        
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                if(pL!=null){
+                        paramsN.addHijos(((Nodo) pL).getHijos());
+                }
+
+                RESULT = paramsN;
+    :}
+    | values:vals params:pL {:
+                Nodo paramsN = new Nodo();
+                paramsN.setID(parser.count);
+                paramsN.setEtiqueta("Parametros");
+                paramsN.setValor(" ");
+                parser.count++;
+
+                paramsN.addHijos((Nodo) vals);
+
+                if(pL!=null){
+                        paramsN.addHijos(((Nodo) pL).getHijos());
+                }
+
+                RESULT = vals; 
+    :}
+    | COMMA params:pL{:
+                RESULT = pL;
+    :}
+    |{::};
 
 scanear::= ID:idP ASSIGNMENT SCAN:scanP LPAR tipo:typeV RPAR SEMICOLON{:
                 Nodo scanear = new Nodo();
