@@ -1,12 +1,13 @@
 init(){
-	def int varx;
+	//def int varx;
 	def int vary -> nothing;
 	def faker validador -> false;
 	
 	if(validador){
 		def int act->12;
 		varx -> 14;
-	}elsif(~validador){
+	}
+	elsif(~validador){
 		sout(vary);
 		def int args;
 	}elsif(varx ~= vary){
@@ -14,7 +15,7 @@ init(){
 	}else{
 		sout(nada);
 	}
-
+	
 	switch(varx){
 		case 1: 
 			varx -> varx + vary;
@@ -26,4 +27,31 @@ init(){
 			varx-> 0;
 			break;
 	}
+
+	loop[
+			sout(datos);
+			while(varx > 10){
+				vary->vary/10;
+				sout(varx);
+			}
+	]each(varchar)
+
+	func faker devolucion(int varchar){
+		def int charcount->varchar;
+		loop[
+			charcount->charcount-2;
+			print(charcount);
+		]each(varchar)
+		if(charcount/2 === 4){
+			charcount->charcount*2;
+		}
+		
+		def int example;
+		
+		example-> :dividerX (99, varchar) ;
+		
+		payback charcount;
+	}
+
+	
 }

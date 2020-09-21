@@ -79,7 +79,7 @@ parser code
             		                System.out.print(token_name_from_id(id) + " | ");
             	                }
                         }
-                }
+                }       
 
         }
 
@@ -133,6 +133,11 @@ non terminal imprimir;
 non terminal scanear;
 non terminal funcCall;
 non terminal caseTypes;
+//No terminal exclusivas para funciones
+non terminal bodyF;
+non terminal propositionF;
+non terminal retValsF;
+
 start with Program;
 
 Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket body:mainbody RCBRACKET:right_cbracket 
@@ -246,7 +251,19 @@ body::= proposition:prop body:bod
 
 
         :}
-        | functions body
+        | functions:funcs body:bod{:
+                Nodo bodyn = new Nodo();
+                bodyn.setEtiqueta("Body");
+                bodyn.setID(parser.count);
+                bodyn.setValor("Body constr");
+                parser.count++;
+
+                bodyn.addHijos((Nodo) funcs);
+                if(bod!=null){
+                        bodyn.addHijos(((Nodo) bod).getHijos());
+                }
+                RESULT = bodyn;
+        :}
         | {:
 
                 /*
@@ -266,8 +283,36 @@ body::= proposition:prop body:bod
                 
                 RESULT = bodyn;
                 */
+                
         :};
 
+bodyF::= propositionF:prop bodyF:bod {:
+
+                Nodo bodyn = new Nodo();
+                bodyn.setEtiqueta("Body");
+                bodyn.setID(parser.count);
+                bodyn.setValor("Body constr");
+                parser.count++;
+
+                //Nodo props = new Nodo();
+                //props.setEtiqueta("proposition");
+                //props.setID(parser.count);
+                //props.setValor(prop.toString());
+                //parser.count++;
+
+                bodyn.addHijos((Nodo) prop);
+                if(bod!=null){
+                        bodyn.addHijos(((Nodo) bod).getHijos());
+                }
+                //bodyn.addHijos((Nodo) bod );
+
+                //parser.padre = bodyn;
+
+                RESULT = bodyn;
+
+:}|{::};
+
+//Proposition solo para el codigo basico
 proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
                 Nodo whileN = new Nodo();
                 whileN.setEtiqueta("While");
@@ -279,7 +324,9 @@ proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
 
                 RESULT = whileN;
         :}
-        |funcCall
+        |funcCall:funC SEMICOLON{:
+                RESULT = funC;
+        :}
         | forLoop:forl{:
                 RESULT = forl;
         :}
@@ -350,7 +397,105 @@ proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
         
         :};
 
-funcCall ::= ID LPAR params RPAR SEMICOLON;
+//Proposition exclusiva de Funciones
+propositionF ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
+                Nodo whileN = new Nodo();
+                whileN.setEtiqueta("While");
+                whileN.setID(parser.count);
+                parser.count++;
+
+                whileN.addHijos((Nodo) ex);
+                whileN.addHijos((Nodo) bod);
+
+                RESULT = whileN;
+        :}
+        |funcCall:funC SEMICOLON{:
+                RESULT = funC;
+        :}
+        | forLoop:forl{:
+                RESULT = forl;
+        :}
+        | ifStatement:ifS{:
+                RESULT = ifS;
+        :}
+        | switchCase:sc{:
+                RESULT = sc;
+        :}
+        | declaraciones:decl{:
+                //Nodo proposition = new Nodo();
+                //proposition.setID(parser.count++);
+                //proposition.setEtiqueta("propositionDecl");
+                //parser.count++;
+
+                //proposition.addHijos((Nodo) decl);
+
+                //parser.padre = proposition;
+                RESULT = decl;
+                
+        :}
+        | declaracionSimple: declS{:
+               /*
+                Nodo proposition = new Nodo();
+                proposition.setID(parser.count);
+                proposition.setEtiqueta("propositionDeclSimple");
+                parser.count++;
+
+                proposition.addHijos((Nodo)declS);
+                parser.padre = proposition;
+                */
+                RESULT = declS;
+        :}
+        | imprimir:printer {:
+                //Nodo printing = new Nodo();
+                //printing.setID(parser.count);
+                //printing.setEtiqueta("Printer");
+                //printing.setValor(":=");
+                //parser.count++;
+
+                //printing.addHijos((Nodo) printer);
+                //parser.padre = printing;
+                RESULT = printer;
+
+
+        :}
+        | scanear:scan{:
+                RESULT = scan;
+        :}
+        | ID:idP ASSIGNMENT:as expression:ex SEMICOLON {:
+                Nodo asignacionID = new Nodo();
+                asignacionID.setEtiqueta("asignacion a valor");
+                asignacionID.setID(parser.count);
+                parser.count++;
+
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                asignacionID.addHijos(idData);
+
+                asignacionID.addHijos((Nodo) ex);
+
+                RESULT = asignacionID;
+
+        
+        :}|PAYBACK retValsF:rvf{:
+                RESULT=rvf;
+        :};
+
+
+funcCall ::= ID:idP LPAR params:pr RPAR{:
+                Nodo funCaller = new Nodo();
+                funCaller.setEtiqueta("Func call");
+                funCaller.setID(parser.count);
+                funCaller.setValor(idP.toString());
+                parser.count++;
+
+                funCaller.addHijos((Nodo) pr);
+
+                RESULT = funCaller;
+:};
 
 imprimir ::= SOUT:st LPAR:lP ID:idP RPAR:rP SEMICOLON {:
                 Nodo impresion = new Nodo();
@@ -549,7 +694,36 @@ declaracionSimple ::= DEF tipo:type ID:idP decl_v_e:dv {:
         :}
 ;
 
-functions::= FUNC tipo ID LPAR params RPAR LCBRACKET body PAYBACK values SEMICOLON RCBRACKET;
+functions::= FUNC tipo:type ID:idP LPAR params:pr RPAR LCBRACKET bodyF:bod  RCBRACKET{:
+                Nodo funcT = new Nodo();
+                funcT.setEtiqueta("Function");
+                funcT.setID(parser.count);
+                funcT.setValor(idP.toString());
+
+                parser.count++;
+                funcT.addHijos((Nodo)type);
+                funcT.addHijos((Nodo)pr);
+                funcT.addHijos((Nodo)bod);
+
+                RESULT= funcT;
+:};
+
+retValsF::= values:vals SEMICOLON{:
+                RESULT= vals;
+        :}
+
+        |funcCall:funCl SEMICOLON{:
+                RESULT= funCl;
+        :}
+        |ID:idP SEMICOLON{:
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+
+                RESULT = idData;
+        :};
 
 params::= tipo:type  ID:idP params:pL {:
                  Nodo paramsN = new Nodo();
@@ -682,7 +856,7 @@ decl_v_e ::= SEMICOLON {:
                 RESULT = asigner;
         :};
 
-asignacion ::= ASSIGNMENT:as values:vals SEMICOLON{:
+asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
                 Nodo asignado = new Nodo();
                 asignado.setEtiqueta("Assignment con value");
                 asignado.setID(parser.count);
@@ -855,7 +1029,9 @@ ifStatement ::= IF:iferW  expression:ex  LCBRACKET body:prop RCBRACKET elsiffer:
                 ifState.addHijos(ifer);
                 ifState.addHijos((Nodo) ex);
                 ifState.addHijos((Nodo) prop);
-                ifState.addHijos((Nodo) elsif);
+                if(elsif!=null){
+                        ifState.addHijos((Nodo) elsif);
+                }
 
                 RESULT = ifState;
 
@@ -890,7 +1066,9 @@ elsiffer::= ELSIF:elsifer expression:ex  LCBRACKET body:prop RCBRACKET elsiffer:
                 RESULT = elseFinal;
 
         :}
-        | {::};
+        | {:
+                 
+        :};
 
 
 switchCase ::= SWITCH LPAR ID:idP RPAR LCBRACKET cases:cs RCBRACKET{:
@@ -984,7 +1162,11 @@ expression ::= expresion_simple:exS{:
                 exprOprel.addHijos((Nodo) exSR);
 
                 RESULT = exprOprel;
-        :};
+        :}
+        | COLON funcCall:fc{:
+                RESULT=fc;
+        :}
+        ;
 
 expresion_simple ::= termino:term{:
                 RESULT = term;
@@ -1050,24 +1232,6 @@ factor ::= ID:idP{:
         :}
 	| ID LPAR lista_expresiones RPAR {:
 
-        :}
-        | ID:idP ASSIGNMENT funcCall:funC{:
-                Nodo idFunc = new Nodo();
-                idFunc.setEtiqueta("ID with Func");
-                idFunc.setID(parser.count);
-                idFunc.setValor("Asignar el retorno de una funcion a un ID");
-                parser.count++;
-
-                Nodo idData = new Nodo();
-                idData.setEtiqueta("ID");
-                idData.setID(parser.count);
-                idData.setValor(idP.toString());
-                parser.count++;
-
-                idFunc.addHijos(idData);
-                idFunc.addHijos((Nodo) funC);
-
-                RESULT = idFunc;
         :}
 	| values:vals{:
                 RESULT = vals;

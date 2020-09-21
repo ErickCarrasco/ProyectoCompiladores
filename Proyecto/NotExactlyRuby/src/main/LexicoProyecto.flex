@@ -75,6 +75,7 @@ pipe = "|"
 hashComment = "#"
 
 %state COMMENT_PORTION
+%state COMMENT_LINE
 
 %%
 
@@ -128,7 +129,9 @@ hashComment = "#"
 	{comma}				{ return new Symbol(sym.COMMA, yycolumn, yyline, yytext());}
 	{pipe}				{ return new Symbol(sym.PIPE, yycolumn, yyline, yytext());}
 	{hashComment}		{yybegin(COMMENT_PORTION);}
+	"//"				{yybegin(COMMENT_LINE);}
 	{spaces}			{}
+	
 	.
 						{
 							System.out.println("Falla en lexico, char o variable no aceptada: " +yytext()+">. Linea: "+(yyline + 1)+ ", Columna: "+(yycolumn+1));
@@ -143,4 +146,10 @@ hashComment = "#"
 	{hashComment}	{yybegin(YYINITIAL);}
 	.				{}
 
+}
+
+<COMMENT_LINE>
+{
+	"\n"	{yybegin(YYINITIAL);}
+	.		{}
 }
