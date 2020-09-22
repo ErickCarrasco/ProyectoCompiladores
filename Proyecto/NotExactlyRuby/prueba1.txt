@@ -24,7 +24,7 @@ init(){
 			varx -> varx * vary;
 			break;
 		default:
-			varx-> 0;
+			varx-> (2 +4 *(2*3));
 			break;
 	}
 

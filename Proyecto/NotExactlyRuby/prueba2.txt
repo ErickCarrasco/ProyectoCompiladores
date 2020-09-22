@@ -1,0 +1,7 @@
+init(){
+	xarg def->;
+	xarg -> 20;
+	def int;
+	def char ->a;
+	def char xv -> a;
+}

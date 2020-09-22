@@ -284,7 +284,11 @@ body::= proposition:prop body:bod
                 RESULT = bodyn;
                 */
                 
-        :};
+        :}/*
+        |error{:
+                System.out.println("Segmentation Fault. Creacion del programa");
+        :}
+        */;
 
 bodyF::= propositionF:prop bodyF:bod {:
 
@@ -377,6 +381,7 @@ proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
                 RESULT = scan;
         :}
         | ID:idP ASSIGNMENT:as expression:ex SEMICOLON {:
+                System.out.println("ID a asignacion");
                 Nodo asignacionID = new Nodo();
                 asignacionID.setEtiqueta("asignacion a valor");
                 asignacionID.setID(parser.count);
@@ -395,7 +400,10 @@ proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
                 RESULT = asignacionID;
 
         
-        :};
+        :}|error{:
+                System.out.println("Falla de segmento, error en creacion de proposition");        
+        :}
+        ;
 
 //Proposition exclusiva de Funciones
 propositionF ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
@@ -482,6 +490,8 @@ propositionF ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
         
         :}|PAYBACK retValsF:rvf{:
                 RESULT=rvf;
+        :}|error{:
+                System.out.println("Falla de segmento, error en creacion de proposition");   
         :};
 
 
@@ -691,6 +701,8 @@ declaracionSimple ::= DEF tipo:type ID:idP decl_v_e:dv {:
 
                 RESULT = DeclSimple;
 
+        :}|error SEMICOLON{:
+                System.out.println("Declaration Fault");
         :}
 ;
 
@@ -706,7 +718,9 @@ functions::= FUNC tipo:type ID:idP LPAR params:pr RPAR LCBRACKET bodyF:bod  RCBR
                 funcT.addHijos((Nodo)bod);
 
                 RESULT= funcT;
-:};
+:}/*|error RCBRACKET{:
+        System.out.println("Function construction flawed");
+:}*/;
 
 retValsF::= values:vals SEMICOLON{:
                 RESULT= vals;
@@ -975,8 +989,8 @@ caseTypes::= LETTERS:lCh {:
 
 tipoVS ::= DEF VECTOR ID ASSIGNMENT vectorData;
 
-vectorData ::= LSBRACKET vectorData RSBRACKET
-        | values COMMA;
+vectorData ::= values
+        | ID;
 
 values ::= BOOL:booleanV {:
                 Nodo boolFaker = new Nodo();

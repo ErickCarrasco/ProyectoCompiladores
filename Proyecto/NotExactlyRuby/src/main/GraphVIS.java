@@ -26,7 +26,7 @@ public class GraphVIS extends javax.swing.JFrame {
      */
     public GraphVIS() {
         initComponents();
-        fc.setCurrentDirectory(new File("./src/"));
+        fc.setCurrentDirectory(new File("./"));
         fc.setFileFilter(new FileNameExtensionFilter("Text", "txt"));
         
     }
