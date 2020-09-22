@@ -1,4 +1,5 @@
 init(){
+	def vector arreglo -> [1, 2 , 3];
 	//def int varx;
 	def int vary -> nothing;
 	def faker validador -> false;

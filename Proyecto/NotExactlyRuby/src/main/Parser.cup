@@ -133,6 +133,8 @@ non terminal imprimir;
 non terminal scanear;
 non terminal funcCall;
 non terminal caseTypes;
+non terminal llamada_valores;
+non terminal lista_valores;
 //No terminal exclusivas para funciones
 non terminal bodyF;
 non terminal propositionF;
@@ -381,7 +383,7 @@ proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
                 RESULT = scan;
         :}
         | ID:idP ASSIGNMENT:as expression:ex SEMICOLON {:
-                System.out.println("ID a asignacion");
+                //System.out.println("ID a asignacion");
                 Nodo asignacionID = new Nodo();
                 asignacionID.setEtiqueta("asignacion a valor");
                 asignacionID.setID(parser.count);
@@ -400,6 +402,8 @@ proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
                 RESULT = asignacionID;
 
         
+        :}|tipoVS:vs{:
+                RESULT = vs;
         :}|error{:
                 System.out.println("Falla de segmento, error en creacion de proposition");        
         :}
@@ -490,7 +494,10 @@ propositionF ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
         
         :}|PAYBACK retValsF:rvf{:
                 RESULT=rvf;
-        :}|error{:
+        :}|tipoVS:vec{:
+                RESULT=vec;
+        :}
+        |error{:
                 System.out.println("Falla de segmento, error en creacion de proposition");   
         :};
 
@@ -904,9 +911,10 @@ asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
                 Nodo asignado = new Nodo();
                 asignado.setEtiqueta("Assignment void");
                 asignado.setID(parser.count);
-                asignado.setValor("=");
+                asignado.setValor("void");
                 parser.count++;
 
+                /*
                 Nodo asigner = new Nodo();
                 asigner.setEtiqueta("ASSIGNMENT");
                 asigner.setID(parser.count);
@@ -914,7 +922,9 @@ asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
                 parser.count++;
 
                 asignado.addHijos(asigner);
+                */
 
+                /*
                 Nodo voidV = new Nodo();
                 voidV.setEtiqueta("Void");
                 voidV.setID(parser.count);
@@ -922,7 +932,8 @@ asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
                 parser.count++;
 
                 asignado.addHijos(voidV);
-
+                */
+                /*
                 Nodo semicolonN = new Nodo();
                 semicolonN.setEtiqueta("semicolon");
                 semicolonN.setID(parser.count);
@@ -930,7 +941,7 @@ asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
                 parser.count++;
 
                 asignado.addHijos(semicolonN);
-
+                */
                 RESULT = asignado;
 
         :};
@@ -987,10 +998,76 @@ caseTypes::= LETTERS:lCh {:
         ;
         
 
-tipoVS ::= DEF VECTOR ID ASSIGNMENT vectorData;
+tipoVS ::= DEF VECTOR ID:idP ASSIGNMENT llamada_valores:valCall SEMICOLON{:
+                Nodo vectorDecl = new Nodo();
+                vectorDecl.setEtiqueta("Vector");
+                vectorDecl.setID(parser.count);
+                vectorDecl.setValor(idP.toString());
+                parser.count++;
 
-vectorData ::= values
-        | ID;
+                vectorDecl.addHijos((Nodo) valCall);
+                
+                RESULT = vectorDecl;
+
+:}|
+        DEF VECTOR ID:idP SEMICOLON{:
+                Nodo vectorDecl = new Nodo();
+                vectorDecl.setEtiqueta("Vector vacio");
+                vectorDecl.setID(parser.count);
+                vectorDecl.setValor(idP.toString());
+                parser.count++; 
+
+                RESULT = vectorDecl;
+        :};
+
+llamada_valores ::= LSBRACKET lista_valores:vls RSBRACKET{:
+
+                System.out.println("ENtro");
+                Nodo listaValues = new Nodo();
+                listaValues.setEtiqueta("List");
+                listaValues.setID(parser.count);
+                parser.count++;
+                /*
+                if(vls!=null){
+                        listaValues.addHijos(((Nodo) vls).getHijos());
+                }
+                */
+                listaValues.addHijos((Nodo)vls);
+
+                RESULT = listaValues;
+
+:};
+
+lista_valores::= vectorData:dp COMMA lista_valores:vls{:
+
+                
+                Nodo data = new Nodo();
+                data.setEtiqueta("Dato vector");
+                data.setID(parser.count);
+                parser.count++;
+                data.addHijos((Nodo) dp);
+
+                if(vls!=null){
+                        data.addHijos(((Nodo) vls).getHijos());
+                }
+                
+                RESULT = data;
+        :}
+        |vectorData:dp  {:
+                RESULT = dp;
+        :};
+
+vectorData ::= values:vls{:
+                RESULT= vls;
+:}
+        | ID:idP{:
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID ");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+                RESULT =idData;
+        :};
 
 values ::= BOOL:booleanV {:
                 Nodo boolFaker = new Nodo();
