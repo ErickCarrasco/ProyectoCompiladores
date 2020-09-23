@@ -883,16 +883,18 @@ asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
                 asignado.setID(parser.count);
                 asignado.setValor("=");
                 parser.count++;
-
+                /*
                 Nodo asigner = new Nodo();
                 asigner.setEtiqueta("ASSIGNMENT");
                 asigner.setID(parser.count);
                 asigner.setValor(as.toString());
                 parser.count++;
-
+                
                 asignado.addHijos(asigner);
+                */
                 asignado.addHijos((Nodo) vals);
 
+                /*
                 Nodo semicolonN = new Nodo();
                 semicolonN.setEtiqueta("semicolon");
                 semicolonN.setID(parser.count);
@@ -901,7 +903,7 @@ asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
 
                 asignado.addHijos(semicolonN);
                 //parser.padre = asignado;
-
+                */
                 RESULT = asignado;
 
 
@@ -1020,21 +1022,9 @@ tipoVS ::= DEF VECTOR ID:idP ASSIGNMENT llamada_valores:valCall SEMICOLON{:
                 RESULT = vectorDecl;
         :};
 
-llamada_valores ::= LSBRACKET lista_valores:vls RSBRACKET{:
-
-                System.out.println("ENtro");
-                Nodo listaValues = new Nodo();
-                listaValues.setEtiqueta("List");
-                listaValues.setID(parser.count);
-                parser.count++;
-                /*
-                if(vls!=null){
-                        listaValues.addHijos(((Nodo) vls).getHijos());
-                }
-                */
-                listaValues.addHijos((Nodo)vls);
-
-                RESULT = listaValues;
+llamada_valores ::= LSBRACKET lista_valores:vls RSBRACKET {:
+       
+                RESULT = vls;
 
 :};
 
@@ -1054,7 +1044,12 @@ lista_valores::= vectorData:dp COMMA lista_valores:vls{:
                 RESULT = data;
         :}
         |vectorData:dp  {:
-                RESULT = dp;
+                Nodo data = new Nodo();
+                data.setEtiqueta("Dato vector");
+                data.setID(parser.count);
+                parser.count++;
+                data.addHijos((Nodo)dp);
+                RESULT = data;
         :};
 
 vectorData ::= values:vls{:
@@ -1256,6 +1251,8 @@ expression ::= expresion_simple:exS{:
         :}
         | COLON funcCall:fc{:
                 RESULT=fc;
+        :} | llamada_valores:vl{:
+                RESULT =vl;
         :}
         ;
 
