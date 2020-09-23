@@ -72,7 +72,8 @@ pipe = "|"
 
 
 //Comment char
-hashComment = "#"
+hashComment = "#!"
+hashCommentClose="!#"
 
 %state COMMENT_PORTION
 %state COMMENT_LINE
@@ -143,7 +144,7 @@ hashComment = "#"
 
 <COMMENT_PORTION>
 {
-	{hashComment}	{yybegin(YYINITIAL);}
+	{hashCommentClose}	{yybegin(YYINITIAL);}
 	.				{}
 
 }

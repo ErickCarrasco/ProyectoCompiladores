@@ -7,7 +7,9 @@ import java.io.FileReader;
 
 parser code
 {:
+        //Contador para ids de los nodos
         public int count=1;
+
         public static Nodo padre;
         public static int syntacticErrors = 0;
 
@@ -199,6 +201,8 @@ Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket bod
                 parser.padre = nodo;
 
                 RESULT = nodo;
+        :}|error {:
+                System.out.println("Foolishness, como no pudiste crear bien el inicio, Dante?");
         :}
         ;
 
@@ -744,6 +748,8 @@ retValsF::= values:vals SEMICOLON{:
                 parser.count++;
 
                 RESULT = idData;
+        :}|error{:
+                System.out.println("Error, verificar el retorno de PAYBACK");
         :};
 
 params::= tipo:type  ID:idP params:pL {:
@@ -875,6 +881,8 @@ decl_v_e ::= SEMICOLON {:
                 asigner.addHijos((Nodo) asign);
 
                 RESULT = asigner;
+        :}|error{:
+                System.out.println("Falla en declaracion asignable/empty");
         :};
 
 asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
@@ -1253,6 +1261,8 @@ expression ::= expresion_simple:exS{:
                 RESULT=fc;
         :} | llamada_valores:vl{:
                 RESULT =vl;
+        :}| error{:
+                System.out.println("Error en declaracion de expresiones");
         :}
         ;
 
@@ -1346,9 +1356,6 @@ factor ::= ID:idP{:
 
         :};
 
-//factor_for ::= ID
-//	| INT
-//	| signo INT;
 
 signo ::= OPSUMA:opSum{:
         Nodo operador = new Nodo();
@@ -1363,7 +1370,7 @@ signo ::= OPSUMA:opSum{:
 lista_expresiones::= expression:ex {:
                 RESULT = ex;
 :} | lista_expresiones COMMA expression{:
-
+        
 :};
 
      
