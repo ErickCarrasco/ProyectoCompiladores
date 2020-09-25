@@ -409,7 +409,7 @@ proposition ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
         :}|tipoVS:vs{:
                 RESULT = vs;
         :}|error{:
-                System.out.println("Falla de segmento, error en creacion de proposition");        
+                System.err.println("Falla de segmento, error en creacion de proposition");        
         :}
         ;
 
@@ -502,7 +502,7 @@ propositionF ::= WHILE expression:ex LCBRACKET body:bod RCBRACKET{:
                 RESULT=vec;
         :}
         |error{:
-                System.out.println("Falla de segmento, error en creacion de proposition");   
+                System.err.println("Falla de segmento, error en creacion de proposition");   
         :};
 
 
@@ -713,7 +713,7 @@ declaracionSimple ::= DEF tipo:type ID:idP decl_v_e:dv {:
                 RESULT = DeclSimple;
 
         :}|error SEMICOLON{:
-                System.out.println("Declaration Fault");
+                System.err.println("Declaration Fault");
         :}
 ;
 
@@ -749,7 +749,7 @@ retValsF::= values:vals SEMICOLON{:
 
                 RESULT = idData;
         :}|error{:
-                System.out.println("Error, verificar el retorno de PAYBACK");
+                System.err.println("Error, verificar el retorno de PAYBACK");
         :};
 
 params::= tipo:type  ID:idP params:pL {:
@@ -812,7 +812,8 @@ params::= tipo:type  ID:idP params:pL {:
     | COMMA params:pL{:
                 RESULT = pL;
     :}
-    |{::};
+    |error{::}|
+    {::};
 
 scanear::= ID:idP ASSIGNMENT SCAN:scanP LPAR tipo:typeV RPAR SEMICOLON{:
                 Nodo scanear = new Nodo();
@@ -843,7 +844,7 @@ scanear::= ID:idP ASSIGNMENT SCAN:scanP LPAR tipo:typeV RPAR SEMICOLON{:
                 RESULT = scanear;
                 
 
-:};
+        :};
 
 lista_ID ::= ID lista_ID{:
 
@@ -882,7 +883,7 @@ decl_v_e ::= SEMICOLON {:
 
                 RESULT = asigner;
         :}|error{:
-                System.out.println("Falla en declaracion asignable/empty");
+                //System.out.println("Falla en declaracion asignable/empty");
         :};
 
 asignacion ::= ASSIGNMENT:as expression:vals SEMICOLON{:
@@ -984,6 +985,8 @@ tipo ::=
                 parser.count++;  
 
                 RESULT = declC;
+        :}|error{:
+                //System.err.println("Falla en los valores");
         :};
 
 caseTypes::= LETTERS:lCh {:
@@ -1004,7 +1007,7 @@ caseTypes::= LETTERS:lCh {:
 
                 RESULT = intVal;
 
-        :}
+        :}|error{::}
         ;
         
 
