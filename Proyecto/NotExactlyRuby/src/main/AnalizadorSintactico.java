@@ -515,6 +515,7 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
 
         public static Nodo padre;
         public static int syntacticErrors = 0;
+        public static ArrayList errores = new ArrayList(); 
 
         public String token_name_from_id(int id){
                 //por medio de SYM.JAVA
@@ -569,7 +570,7 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
 
         public void syntax_error(Symbol s){
                 report_error("Error sintáctico. No se esperaba el siguiente token: <" + s.value + ">. Línea: " + (s.right + 1) + ", Columna: " + (s.left + 1) + 	"\n", null);
-
+                errores.add(("Error sintáctico. No se esperaba el siguiente token: <" + s.value + ">. Línea: " + (s.right + 1) + ", Columna: " + (s.left + 1) + 	"\n"));
                 syntacticErrors++;
 
                 List expected = expected_token_ids();
