@@ -150,9 +150,11 @@ Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket bod
                 Nodo nodo = new Nodo();
                 nodo.setEtiqueta("INITIALIZE");
                 nodo.setID(parser.count);
+                nodo.setValor(initProg.toString());
                 parser.count++;
 
                 //Terminal init
+                /*
                 Nodo initProgn = new Nodo();
                 initProgn.setEtiqueta("INITIAL");
                 initProgn.setID(parser.count);
@@ -161,7 +163,8 @@ Program ::= INIT:initProg LPAR:leftPar RPAR:rightPar LCBRACKET:left_cbracket bod
                 //initp.setValor(id);
 
                 nodo.addHijos(initProgn);
-
+                */
+                
                 //Terminal leftPar
                // Nodo leftParn = new Nodo();
                 //leftParn.setEtiqueta("Left Parenthesis");

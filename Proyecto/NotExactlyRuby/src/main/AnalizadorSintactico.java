@@ -655,9 +655,11 @@ class CUP$AnalizadorSintactico$actions {
                 Nodo nodo = new Nodo();
                 nodo.setEtiqueta("INITIALIZE");
                 nodo.setID(parser.count);
+                nodo.setValor(initProg.toString());
                 parser.count++;
 
                 //Terminal init
+                /*
                 Nodo initProgn = new Nodo();
                 initProgn.setEtiqueta("INITIAL");
                 initProgn.setID(parser.count);
@@ -666,7 +668,8 @@ class CUP$AnalizadorSintactico$actions {
                 //initp.setValor(id);
 
                 nodo.addHijos(initProgn);
-
+                */
+                
                 //Terminal leftPar
                // Nodo leftParn = new Nodo();
                 //leftParn.setEtiqueta("Left Parenthesis");

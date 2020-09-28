@@ -13,11 +13,11 @@ init(){
 	}
 
     while(x>10){
-        def varVector -> [1,2,3];
+        def Vector varVector -> [1,2,3];
         if(x===5){
-            sout(x);
+            sout(ex);
         }else{
-            x->x-1;
+            exx->exx-1;
         }
     }
 }
