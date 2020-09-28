@@ -1,0 +1,23 @@
+init(){
+    if(validador){
+		def int act->12;
+		varx -> 14;
+	}
+	elsif(~validador){
+		sout(vary);
+		def int args;
+	}elsif(varx ~= vary){
+		sout(varx);
+	}else{
+		sout(nada);
+	}
+
+    while(x>10){
+        def varVector -> [1,2,3];
+        if(x===5){
+            sout(x);
+        }else{
+            x->x-1;
+        }
+    }
+}

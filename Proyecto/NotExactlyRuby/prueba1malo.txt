@@ -1,0 +1,7 @@
+init(){
+    def integer =x;
+    while[](x = x +2);
+    loop{
+        x-> x +12;
+    }
+}
