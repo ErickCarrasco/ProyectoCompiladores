@@ -1,0 +1,12 @@
+init(){
+	def vector xa -> [[1,2],[1,3]];
+	def int ID;
+	if(ID > 0){
+		sout(ID);
+	}
+	
+	func int recursiva(int na){
+		recursiva(na);	
+	}
+
+}
