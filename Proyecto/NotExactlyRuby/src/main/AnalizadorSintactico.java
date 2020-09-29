@@ -2939,7 +2939,16 @@ class CUP$AnalizadorSintactico$actions {
           case 97: // factor ::= ID LPAR lista_expresiones RPAR 
             {
               Object RESULT =null;
+		int idPleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).left;
+		int idPright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).right;
+		Object idP = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).value;
 		
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+                RESULT = idData;
 
         
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("factor",11, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -3044,8 +3053,11 @@ class CUP$AnalizadorSintactico$actions {
           case 103: // lista_expresiones ::= lista_expresiones COMMA expression 
             {
               Object RESULT =null;
+		int exleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int exright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		Object ex = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
-        
+                RESULT= ex;
 
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("lista_expresiones",26, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }

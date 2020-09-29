@@ -1335,7 +1335,13 @@ factor ::= ID:idP{:
 
                 RESULT = idData;
         :}
-	| ID LPAR lista_expresiones RPAR {:
+	| ID:idP LPAR lista_expresiones RPAR {:
+                Nodo idData = new Nodo();
+                idData.setEtiqueta("ID");
+                idData.setID(parser.count);
+                idData.setValor(idP.toString());
+                parser.count++;
+                RESULT = idData;
 
         :}
 	| values:vals{:
@@ -1376,8 +1382,8 @@ signo ::= OPSUMA:opSum{:
 
 lista_expresiones::= expression:ex {:
                 RESULT = ex;
-:} | lista_expresiones COMMA expression{:
-        
+:} | lista_expresiones COMMA expression:ex{:
+                RESULT= ex;
 :};
 
      
