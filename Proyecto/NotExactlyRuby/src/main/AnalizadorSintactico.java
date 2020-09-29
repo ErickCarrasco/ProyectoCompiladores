@@ -835,23 +835,16 @@ class CUP$AnalizadorSintactico$actions {
               Object RESULT =null;
 		
 
-                /*
+                
                 Nodo bodyn = new Nodo();
-                bodyn.setEtiqueta("Body");
+                bodyn.setEtiqueta("null");
                 bodyn.setID(parser.count);
                 bodyn.setValor("Body constr");
                 parser.count++;
 
-                Nodo empty = new Nodo();
-                empty.setEtiqueta("EMPTY");
-                empty.setID(parser.count);
-                empty.setValor("null");
-                parser.count++;
-                
-                bodyn.addHijos(empty);
                 
                 RESULT = bodyn;
-                */
+                
                 
         
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("body",22, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);

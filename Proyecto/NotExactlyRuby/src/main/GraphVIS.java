@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -152,21 +153,25 @@ public class GraphVIS extends javax.swing.JFrame {
 
     private void jb_printerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_printerMouseClicked
         // Funcion para graficar el arbol
-        try {
-            AnalizadorSintactico p = new AnalizadorSintactico(new Lexico(new FileReader(fl)));
-            p.parse();
-            if ((Lexico.erroresLexicos == 0) && (AnalizadorSintactico.syntacticErrors == 0)) {
-                Nodo root = AnalizadorSintactico.padre;
-                Graficar(recorrido(root));
-                this.ta_output.append("El AST fue generado correctamente.");
-            } else {
-                for (int i = 0; i < AnalizadorSintactico.errores.size(); i++) {
-                    this.ta_output.append((String) AnalizadorSintactico.errores.get(i));
+        if (fl != null) {
+            try {
+                AnalizadorSintactico p = new AnalizadorSintactico(new Lexico(new FileReader(fl)));
+                p.parse();
+                if ((Lexico.erroresLexicos == 0) && (AnalizadorSintactico.syntacticErrors == 0)) {
+                    Nodo root = AnalizadorSintactico.padre;
+                    Graficar(recorrido(root));
+                    this.ta_output.append("El AST fue generado correctamente.");
+                } else {
+                    for (int i = 0; i < AnalizadorSintactico.errores.size(); i++) {
+                        this.ta_output.append((String) AnalizadorSintactico.errores.get(i));
+                    }
+                    this.ta_output.append("No se generó el AST.");
                 }
-                this.ta_output.append("No se generó el AST.");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }else{
+            JOptionPane.showMessageDialog(this, "No se ha cargado o escrito un programa!");
         }
 
 
@@ -261,6 +266,7 @@ public class GraphVIS extends javax.swing.JFrame {
    private String recorrido(Nodo raiz) {
         String cuerpo = "";
         for (Nodo child : raiz.hijos) {
+            System.out.println(child.toString());
             if (!(child.getEtiqueta().equals("vacio"))) {
                 cuerpo += "\"" + raiz.getID() + ". " + raiz.getEtiqueta() + " = " + raiz.getValor()
                         + "\"->\"" + child.getID() + ". " + child.getEtiqueta() + " = " + child.getValor() + "\"" + "\n";
