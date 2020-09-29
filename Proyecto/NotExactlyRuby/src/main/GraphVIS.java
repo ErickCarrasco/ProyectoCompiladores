@@ -8,6 +8,7 @@ package main;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -20,7 +21,7 @@ public class GraphVIS extends javax.swing.JFrame {
 
     final JFileChooser fc = new JFileChooser();
     File fl;
-    
+
     /**
      * Creates new form GraphVIS
      */
@@ -28,7 +29,7 @@ public class GraphVIS extends javax.swing.JFrame {
         initComponents();
         fc.setCurrentDirectory(new File("./"));
         fc.setFileFilter(new FileNameExtensionFilter("Text", "txt"));
-        
+
     }
 
     /**
@@ -51,9 +52,16 @@ public class GraphVIS extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        ta_codex.setEditable(false);
         ta_codex.setColumns(20);
         ta_codex.setRows(5);
+        ta_codex.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ta_codexKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ta_codexKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(ta_codex);
 
         jb_loadFile.setText("Load File");
@@ -94,13 +102,12 @@ public class GraphVIS extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jb_printer)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jb_loadFile))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jb_loadFile)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -130,44 +137,81 @@ public class GraphVIS extends javax.swing.JFrame {
         this.ta_output.setText("");
         int returnVal = fc.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-             fl = fc.getSelectedFile();
-        try {
-          // What to do with the file, e.g. display it in a TextArea
-          this.ta_codex.read( new FileReader( fl.getAbsolutePath() ), null );
-        } catch (Exception ex) {
-          //System.out.println("problem accessing file"+file.getAbsolutePath());
-        }
+            fl = fc.getSelectedFile();
+            try {
+                // What to do with the file, e.g. display it in a TextArea
+                this.ta_codex.read(new FileReader(fl.getAbsolutePath()), null);
+            } catch (Exception ex) {
+                //System.out.println("problem accessing file"+file.getAbsolutePath());
+            }
         } else {
             System.out.println("File access cancelled by user.");
-        }   
+        }
 
     }//GEN-LAST:event_jb_loadFileMouseClicked
 
     private void jb_printerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_printerMouseClicked
         // Funcion para graficar el arbol
-        try{
+        try {
             AnalizadorSintactico p = new AnalizadorSintactico(new Lexico(new FileReader(fl)));
             p.parse();
-            if((Lexico.erroresLexicos == 0) && (AnalizadorSintactico.syntacticErrors ==0)){
+            if ((Lexico.erroresLexicos == 0) && (AnalizadorSintactico.syntacticErrors == 0)) {
                 Nodo root = AnalizadorSintactico.padre;
                 Graficar(recorrido(root));
                 this.ta_output.append("El AST fue generado correctamente.");
-            }else{
+            } else {
                 for (int i = 0; i < AnalizadorSintactico.errores.size(); i++) {
                     this.ta_output.append((String) AnalizadorSintactico.errores.get(i));
                 }
                 this.ta_output.append("No se generó el AST.");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
-        
-       
 
-        
+
     }//GEN-LAST:event_jb_printerMouseClicked
+
+    private void ta_codexKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ta_codexKeyPressed
+        FileWriter f2;
+        if (fl != null) {
+            try {
+                f2 = new FileWriter(fl, false);
+                f2.write(this.ta_codex.getText());
+                f2.close();
+            } catch (IOException e) {
+            }
+        } else {
+            fl = new File("./temporal.txt");
+            try {
+                f2 = new FileWriter(fl, false);
+                f2.write(this.ta_codex.getText());
+                f2.close();
+            } catch (IOException e) {
+            }
+        }
+
+    }//GEN-LAST:event_ta_codexKeyPressed
+
+    private void ta_codexKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ta_codexKeyReleased
+        FileWriter f2;
+        if (fl != null) {
+            try {
+                f2 = new FileWriter(fl, false);
+                f2.write(this.ta_codex.getText());
+                f2.close();
+            } catch (IOException e) {
+            }
+        } else {
+            fl = new File("./temporal.txt");
+            try {
+                f2 = new FileWriter(fl, false);
+                f2.write(this.ta_codex.getText());
+                f2.close();
+            } catch (IOException e) {
+            }
+        }
+    }//GEN-LAST:event_ta_codexKeyReleased
 
     /**
      * @param args the command line arguments
@@ -214,33 +258,32 @@ public class GraphVIS extends javax.swing.JFrame {
     private javax.swing.JTextArea ta_codex;
     private javax.swing.JTextArea ta_output;
     // End of variables declaration//GEN-END:variables
-   private String recorrido(Nodo raiz){
+   private String recorrido(Nodo raiz) {
         String cuerpo = "";
-            for(Nodo child : raiz.hijos ){
-                if(!(child.getEtiqueta().equals("vacio"))){
-                    cuerpo += "\"" + raiz.getID() + ". " + raiz.getEtiqueta() + " = " + raiz.getValor() +
-        			"\"->\""+ child.getID() +". " + child.getEtiqueta()  + " = " + child.getValor() + "\""  + "\n";
-        		    cuerpo += recorrido(child);
-                }
+        for (Nodo child : raiz.hijos) {
+            if (!(child.getEtiqueta().equals("vacio"))) {
+                cuerpo += "\"" + raiz.getID() + ". " + raiz.getEtiqueta() + " = " + raiz.getValor()
+                        + "\"->\"" + child.getID() + ". " + child.getEtiqueta() + " = " + child.getValor() + "\"" + "\n";
+                cuerpo += recorrido(child);
             }
-            return cuerpo;
+        }
+        return cuerpo;
+    }
+
+    private void Graficar(String cadena) {
+        FileWriter fw = null;
+        PrintWriter pw = null;
+        String archivo = "AbstractSyntaxTree.dot";
+        try {
+            fw = new FileWriter(archivo);
+            pw = new PrintWriter(fw);
+            pw.println("digraph G {");
+            pw.println(cadena);
+            pw.println("\n}");
+            fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        private  void Graficar(String cadena) {
-            FileWriter fw = null;
-            PrintWriter pw = null;
-            String archivo = "AbstractSyntaxTree.dot";
-            try {
-                fw = new FileWriter(archivo);
-                pw = new PrintWriter(fw);
-                pw.println("digraph G {");
-                pw.println(cadena);
-                pw.println("\n}");
-                fw.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            
-        }
+    }
 }
-
