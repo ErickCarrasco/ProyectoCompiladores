@@ -1,5 +1,13 @@
 digraph G {
-"2. INITIALIZE = init"->"1. null = Body constr"
+"13. INITIALIZE = init"->"12. Body = Body constr"
+"12. Body = Body constr"->"10. Vector = id"
+"10. Vector = id"->"9. 2d vector datos = null"
+"9. 2d vector datos = null"->"4. Dato vector = null"
+"4. Dato vector = null"->"1. int val = 1"
+"4. Dato vector = null"->"2. int val = 2"
+"9. 2d vector datos = null"->"8. Dato vector = null"
+"8. Dato vector = null"->"5. int val = 1"
+"8. Dato vector = null"->"6. int val = 3"
 
 
 }

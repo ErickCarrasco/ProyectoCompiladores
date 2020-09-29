@@ -1036,6 +1036,7 @@ llamada_valores ::= LSBRACKET lista_valores:vls RSBRACKET {:
 
 :};
 
+
 lista_valores::= vectorData:dp COMMA lista_valores:vls{:
 
                 
@@ -1058,7 +1059,17 @@ lista_valores::= vectorData:dp COMMA lista_valores:vls{:
                 parser.count++;
                 data.addHijos((Nodo)dp);
                 RESULT = data;
-        :};
+        :}
+        | llamada_valores:lvs COMMA llamada_valores:lvs1{:
+                Nodo data = new Nodo();
+                data.setEtiqueta("2d vector datos");
+                data.setID(parser.count);
+                parser.count++;
+                data.addHijos((Nodo)lvs);
+                data.addHijos((Nodo)lvs1);
+                RESULT = data;
+        :}
+;
 
 vectorData ::= values:vls{:
                 RESULT= vls;
@@ -1378,7 +1389,3 @@ lista_expresiones::= expression:ex {:
 :} | lista_expresiones COMMA expression:ex{:
                 RESULT= ex;
 :};
-
-     
-
-
